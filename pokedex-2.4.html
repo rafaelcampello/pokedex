@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<!-- Isso é um comentário em HTML e não será exibido na página -->
+<!-- Pokédex by Yury e Rafael. versão 2.4 2024 -->
+<!-- BUGS CONHECIDOS: Ao buscar MEW, aparece o MEWTWO. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pokédex</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f0f0f0;
+        background-image: url('pokeball.png');
+        background-repeat: repeat;
+    }
+    .pokedex {
+        display: flex;
+        flex-direction: row;
+        margin: 20px auto;
+        border: 2px solid #333;
+        border-radius: 10px;
+        overflow: hidden;
+        background-color: #fff;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        width: 600px;
+    }
+    .pokedex-sidebar {
+        width: 250px;
+        padding: 20px;
+        background-color: #f00;
+        color: #fff;
+        overflow-y: auto;
+        max-height: 500px;
+    }
+    .pokedex-main {
+        flex: 1;
+        padding: 20px;
+    }
+    .pokemon-list {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+    .pokemon-list-item {
+        margin-bottom: 10px;
+    }
+    .pokemon-list-item a {
+        color: #fff;
+        text-decoration: none;
+        display: block;
+        padding: 5px;
+        border-radius: 5px;
+        background-color: #900;
+        transition: background-color 0.3s ease;
+    }
+    .pokemon-list-item a:hover {
+        background-color: #f00;
+    }
+    .pokemon-info {
+        display: none;
+    }
+    .pokemon-info.active {
+        display: block;
+    }
+    .pokemon-info h2 {
+        margin-top: 0;
+    }
+    .pokemon-info p {
+        margin-bottom: 10px;
+    }
+    .pokemon-info img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+    .search-form {
+        margin-bottom: 20px;
+    }
+    .search-form input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+    .credits {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .credits h2 {
+        margin: 0;
+    }
+    .linkedin-logo {
+        width: 20px;
+        height: auto;
+        margin-left: 5px;
+    }
+    .pokemon-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+    .pokemon-buttons button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        background-color: #4CAF50;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+    .pokemon-buttons button:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+<div class="pokedex">
+    <div class="pokedex-sidebar">
+        <h2>Pokédex</h2>
+		<h2>Lista de Pokémon</h2>
+        <form class="search-form">
+            <input type="text" id="search" placeholder="Pesquisar Pokémon...">
+        </form>
+        <div class="pokemon-buttons">
+            <button onclick="showPreviousPokemon()">Anterior</button>
+            <button onclick="showNextPokemon()">Próximo</button>
+        </div>
+        <ul class="pokemon-list">
+            <ul class="pokemon-list">
+            <li class="pokemon-list-item"><a href="#bulbasaur">001# Bulbasaur</a></li>
+            <li class="pokemon-list-item"><a href="#ivysaur">002# Ivysaur</a></li>
+            <li class="pokemon-list-item"><a href="#venusaur">003# Venusaur</a></li>
+            <li class="pokemon-list-item"><a href="#charmander">004# Charmander</a></li>
+            <li class="pokemon-list-item"><a href="#charmeleon">005# Charmeleon</a></li>
+            <li class="pokemon-list-item"><a href="#charizard">006# Charizard</a></li>
+            <li class="pokemon-list-item"><a href="#squirtle">007# Squirtle</a></li>
+            <li class="pokemon-list-item"><a href="#wartortle">008# Wartortle</a></li>
+    <li class="pokemon-list-item"><a href="#blastoise">009# Blastoise</a></li>
+    <li class="pokemon-list-item"><a href="#caterpie">010# Caterpie</a></li>
+    <li class="pokemon-list-item"><a href="#metapod">011# Metapod</a></li>
+    <li class="pokemon-list-item"><a href="#butterfree">012# Butterfree</a></li>
+    <li class="pokemon-list-item"><a href="#weedle">013# Weedle</a></li>
+    <li class="pokemon-list-item"><a href="#kakuna">014# Kakuna</a></li>
+    <li class="pokemon-list-item"><a href="#beedrill">015# Beedrill</a></li>
+    <li class="pokemon-list-item"><a href="#pidgey">016# Pidgey</a></li>
+    <li class="pokemon-list-item"><a href="#pidgeotto">017# Pidgeotto</a></li>
+    <li class="pokemon-list-item"><a href="#pidgeot">018# Pidgeot</a></li>
+    <li class="pokemon-list-item"><a href="#rattata">019# Rattata</a></li>
+    <li class="pokemon-list-item"><a href="#raticate">020# Raticate</a></li>
+    <li class="pokemon-list-item"><a href="#spearow">021# Spearow</a></li>
+    <li class="pokemon-list-item"><a href="#fearow">022# Fearow</a></li>
+    <li class="pokemon-list-item"><a href="#ekans">023# Ekans</a></li>
+    <li class="pokemon-list-item"><a href="#arbok">024# Arbok</a></li>
+    <li class="pokemon-list-item"><a href="#pikachu">025# Pikachu</a></li>
+    <li class="pokemon-list-item"><a href="#raichu">026# Raichu</a></li>
+    <li class="pokemon-list-item"><a href="#sandshrew">027# Sandshrew</a></li>
+    <li class="pokemon-list-item"><a href="#sandslash">028# Sandslash</a></li>
+    <li class="pokemon-list-item"><a href="#nidoran-f">029# Nidoran♀</a></li>
+    <li class="pokemon-list-item"><a href="#nidorina">030# Nidorina</a></li>
+    <li class="pokemon-list-item"><a href="#nidoqueen">031# Nidoqueen</a></li>
+    <li class="pokemon-list-item"><a href="#nidoran-m">032# Nidoran♂</a></li>
+    <li class="pokemon-list-item"><a href="#nidorino">033# Nidorino</a></li>
+    <li class="pokemon-list-item"><a href="#nidoking">034# Nidoking</a></li>
+    <li class="pokemon-list-item"><a href="#clefairy">035# Clefairy</a></li>
+    <li class="pokemon-list-item"><a href="#clefable">036# Clefable</a></li>
+    <li class="pokemon-list-item"><a href="#vulpix">037# Vulpix</a></li>
+    <li class="pokemon-list-item"><a href="#ninetales">038# Ninetales</a></li>
+    <li class="pokemon-list-item"><a href="#jigglypuff">039# Jigglypuff</a></li>
+    <li class="pokemon-list-item"><a href="#wigglytuff">040# Wigglytuff</a></li>
+    <li class="pokemon-list-item"><a href="#zubat">041# Zubat</a></li>
+    <li class="pokemon-list-item"><a href="#golbat">042# Golbat</a></li>
+    <li class="pokemon-list-item"><a href="#oddish">043# Oddish</a></li>
+    <li class="pokemon-list-item"><a href="#gloom">044# Gloom</a></li>
+    <li class="pokemon-list-item"><a href="#vileplume">045# Vileplume</a></li>
+    <li class="pokemon-list-item"><a href="#paras">046# Paras</a></li>
+    <li class="pokemon-list-item"><a href="#parasect">047# Parasect</a></li>
+    <li class="pokemon-list-item"><a href="#venonat">048# Venonat</a></li>
+    <li class="pokemon-list-item"><a href="#venomoth">049# Venomoth</a></li>
+    <li class="pokemon-list-item"><a href="#diglett">050# Diglett</a></li>
+    <li class="pokemon-list-item"><a href="#dugtrio">051# Dugtrio</a></li>
+    <li class="pokemon-list-item"><a href="#meowth">052# Meowth</a></li>
+    <li class="pokemon-list-item"><a href="#persian">053# Persian</a></li>
+    <li class="pokemon-list-item"><a href="#psyduck">054# Psyduck</a></li>
+    <li class="pokemon-list-item"><a href="#golduck">055# Golduck</a></li>
+    <li class="pokemon-list-item"><a href="#mankey">056# Mankey</a></li>
+    <li class="pokemon-list-item"><a href="#primeape">057# Primeape</a></li>
+    <li class="pokemon-list-item"><a href="#growlithe">058# Growlithe</a></li>
+    <li class="pokemon-list-item"><a href="#arcanine">059# Arcanine</a></li>
+    <li class="pokemon-list-item"><a href="#poliwag">060# Poliwag</a></li>
+    <li class="pokemon-list-item"><a href="#poliwhirl">61# Poliwhirl</a></li>
+    <li class="pokemon-list-item"><a href="#poliwrath">62# Poliwrath</a></li>
+    <li class="pokemon-list-item"><a href="#abra">63# Abra</a></li>
+    <li class="pokemon-list-item"><a href="#kadabra">64# Kadabra</a></li>
+    <li class="pokemon-list-item"><a href="#alakazam">65# Alakazam</a></li>
+    <li class="pokemon-list-item"><a href="#machop">66# Machop</a></li>
+    <li class="pokemon-list-item"><a href="#machoke">67# Machoke</a></li>
+    <li class="pokemon-list-item"><a href="#machamp">68# Machamp</a></li>
+    <li class="pokemon-list-item"><a href="#bellsprout">69# Bellsprout</a></li>
+    <li class="pokemon-list-item"><a href="#weepinbell">70# Weepinbell</a></li>
+    <li class="pokemon-list-item"><a href="#victreebel">71# Victreebel</a></li>
+    <li class="pokemon-list-item"><a href="#tentacool">72# Tentacool</a></li>
+    <li class="pokemon-list-item"><a href="#tentacruel">73# Tentacruel</a></li>
+    <li class="pokemon-list-item"><a href="#geodude">74# Geodude</a></li>
+    <li class="pokemon-list-item"><a href="#graveler">75# Graveler</a></li>
+    <li class="pokemon-list-item"><a href="#golem">76# Golem</a></li>
+    <li class="pokemon-list-item"><a href="#ponyta">77# Ponyta</a></li>
+    <li class="pokemon-list-item"><a href="#rapidash">78# Rapidash</a></li>
+    <li class="pokemon-list-item"><a href="#slowpoke">79# Slowpoke</a></li>
+    <li class="pokemon-list-item"><a href="#slowbro">80# Slowbro</a></li>
+    <li class="pokemon-list-item"><a href="#magnemite">81# Magnemite</a></li>
+    <li class="pokemon-list-item"><a href="#magneton">82# Magneton</a></li>
+    <li class="pokemon-list-item"><a href="#farfetchd">83# Farfetch'd</a></li>
+    <li class="pokemon-list-item"><a href="#doduo">84# Doduo</a></li>
+    <li class="pokemon-list-item"><a href="#dodrio">85# Dodrio</a></li>
+    <li class="pokemon-list-item"><a href="#seel">86# Seel</a></li>
+    <li class="pokemon-list-item"><a href="#dewgong">87# Dewgong</a></li>
+    <li class="pokemon-list-item"><a href="#grimer">88# Grimer</a></li>
+    <li class="pokemon-list-item"><a href="#muk">89# Muk</a></li>
+    <li class="pokemon-list-item"><a href="#shellder">90# Shellder</a></li>
+    <li class="pokemon-list-item"><a href="#cloyster">91# Cloyster</a></li>
+    <li class="pokemon-list-item"><a href="#gastly">92# Gastly</a></li>
+    <li class="pokemon-list-item"><a href="#haunter">93# Haunter</a></li>
+    <li class="pokemon-list-item"><a href="#gengar">94# Gengar</a></li>
+    <li class="pokemon-list-item"><a href="#onix">95# Onix</a></li>
+    <li class="pokemon-list-item"><a href="#drowzee">96# Drowzee</a></li>
+    <li class="pokemon-list-item"><a href="#hypno">97# Hypno</a></li>
+    <li class="pokemon-list-item"><a href="#krabby">98# Krabby</a></li>
+    <li class="pokemon-list-item"><a href="#kingler">99# Kingler</a></li>
+    <li class="pokemon-list-item"><a href="#voltorb">100# Voltorb</a></li>
+    <li class="pokemon-list-item"><a href="#electrode">101# Electrode</a></li>
+    <li class="pokemon-list-item"><a href="#exeggcute">102# Exeggcute</a></li>
+    <li class="pokemon-list-item"><a href="#exeggutor">103# Exeggutor</a></li>
+    <li class="pokemon-list-item"><a href="#cubone">104# Cubone</a></li>
+    <li class="pokemon-list-item"><a href="#marowak">105# Marowak</a></li>
+    <li class="pokemon-list-item"><a href="#hitmonlee">106# Hitmonlee</a></li>
+    <li class="pokemon-list-item"><a href="#hitmonchan">107# Hitmonchan</a></li>
+    <li class="pokemon-list-item"><a href="#lickitung">108# Lickitung</a></li>
+    <li class="pokemon-list-item"><a href="#koffing">109# Koffing</a></li>
+    <li class="pokemon-list-item"><a href="#weezing">110# Weezing</a></li>
+    <li class="pokemon-list-item"><a href="#rhyhorn">111# Rhyhorn</a></li>
+    <li class="pokemon-list-item"><a href="#rhydon">112# Rhydon</a></li>
+    <li class="pokemon-list-item"><a href="#chansey">113# Chansey</a></li>
+    <li class="pokemon-list-item"><a href="#tangela">114# Tangela</a></li>
+    <li class="pokemon-list-item"><a href="#kangaskhan">115# Kangaskhan</a></li>
+    <li class="pokemon-list-item"><a href="#horsea">116# Horsea</a></li>
+    <li class="pokemon-list-item"><a href="#seadra">117# Seadra</a></li>
+    <li class="pokemon-list-item"><a href="#goldeen">118# Goldeen</a></li>
+    <li class="pokemon-list-item"><a href="#seaking">119# Seaking</a></li>
+    <li class="pokemon-list-item"><a href="#staryu">120# Staryu</a></li>
+    <li class="pokemon-list-item"><a href="#starmie">121# Starmie</a></li>
+    <li class="pokemon-list-item"><a href="#mrmime">122# Mr. Mime</a></li>
+    <li class="pokemon-list-item"><a href="#scyther">123# Scyther</a></li>
+    <li class="pokemon-list-item"><a href="#jynx">124# Jynx</a></li>
+    <li class="pokemon-list-item"><a href="#electabuzz">125# Electabuzz</a></li>
+    <li class="pokemon-list-item"><a href="#magmar">126# Magmar</a></li>
+    <li class="pokemon-list-item"><a href="#pinsir">127# Pinsir</a></li>
+    <li class="pokemon-list-item"><a href="#tauros">128# Tauros</a></li>
+    <li class="pokemon-list-item"><a href="#magikarp">129# Magikarp</a></li>
+    <li class="pokemon-list-item"><a href="#gyarados">130# Gyarados</a></li>
+    <li class="pokemon-list-item"><a href="#lapras">131# Lapras</a></li>
+    <li class="pokemon-list-item"><a href="#ditto">132# Ditto</a></li>
+    <li class="pokemon-list-item"><a href="#eevee">133# Eevee</a></li>
+    <li class="pokemon-list-item"><a href="#vaporeon">134# Vaporeon</a></li>
+    <li class="pokemon-list-item"><a href="#jolteon">135# Jolteon</a></li>
+    <li class="pokemon-list-item"><a href="#flareon">136# Flareon</a></li>
+    <li class="pokemon-list-item"><a href="#porygon">137# Porygon</a></li>
+    <li class="pokemon-list-item"><a href="#omanyte">138# Omanyte</a></li>
+    <li class="pokemon-list-item"><a href="#omastar">139# Omastar</a></li>
+    <li class="pokemon-list-item"><a href="#kabuto">140# Kabuto</a></li>
+    <li class="pokemon-list-item"><a href="#kabutops">141# Kabutops</a></li>
+    <li class="pokemon-list-item"><a href="#aerodactyl">142# Aerodactyl</a></li>
+    <li class="pokemon-list-item"><a href="#snorlax">143# Snorlax</a></li>
+    <li class="pokemon-list-item"><a href="#articuno">144# Articuno</a></li>
+    <li class="pokemon-list-item"><a href="#zapdos">145# Zapdos</a></li>
+    <li class="pokemon-list-item"><a href="#moltres">146# Moltres</a></li>
+    <li class="pokemon-list-item"><a href="#dratini">147# Dratini</a></li>
+    <li class="pokemon-list-item"><a href="#dragonair">148# Dragonair</a></li>
+    <li class="pokemon-list-item"><a href="#dragonite">149# Dragonite</a></li>
+    <li class="pokemon-list-item"><a href="#mewtwo">150# Mewtwo</a></li>
+    <li class="pokemon-list-item"><a href="#mew">151# Mew</a></li>
+        </ul>
+    </div>
+    <div class="pokedex-main">
+        <div id="bulbasaur" class="pokemon-info active">
+            <h2>001# Bulbasaur</h2>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png" alt="Bulbasaur" style="max-width: 200px;">
+            <p>Altura: 0.7m</p>
+            <p>Peso: 6.9kg</p>
+            <p>Tipo: Grama/Veneno</p>
+            <p>Descrição: Uma estranha semente foi plantada em seu dorso ao nascer. A planta brota e cresce com este Pokémon.</p>
+        </div>
+        <div id="ivysaur" class="pokemon-info">
+            <h2>002# Ivysaur</h2>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png" alt="Ivysaur" style="max-width: 200px;">
+            <p>Altura: 1.0m</p>
+            <p>Peso: 13.0kg</p>
+            <p>Tipo: Grama/Veneno</p>
+            <p>Descrição: Quando o bulbo em suas costas floresce, diz-se que a primavera está próxima.</p>
+        </div>
+         <div id="venusaur" class="pokemon-info">
+            <h2>003# Venusaur</h2>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png" alt="Venusaur" style="max-width: 200px;">
+            <p>Altura: 2.0m</p>
+            <p>Peso: 100.0kg</p>
+            <p>Tipo: Grama/Veneno</p>
+            <p>Descrição: As plantas em suas costas crescem em tamanho e florescem com a luz solar.</p>
+        </div>
+        <div id="charmander" class="pokemon-info">
+            <h2>004# Charmander</h2>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png" alt="Charmander" style="max-width: 200px;">
+            <p>Altura: 0.6m</p>
+            <p>Peso: 8.5kg</p>
+            <p>Tipo: Fogo</p>
+            <p>Descrição: Prefere lugares quentes. Quando chove, diz-se que o vapor é produzido pela cauda flamejante.</p>
+        </div>
+        <div id="charmeleon" class="pokemon-info">
+            <h2>005# Charmeleon</h2>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png" alt="Charmeleon" style="max-width: 200px;">
+            <p>Altura: 1.1m</p>
+            <p>Peso: 19.0kg</p>
+            <p>Tipo: Fogo</p>
+            <p>Descrição: Tem uma personalidade temperamental. Diz-se que cresce quando treinado adequadamente.</p>
+        </div>
+        <div id="charizard" class="pokemon-info">
+            <h2>006# Charizard</h2>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" alt="Charizard" style="max-width: 200px;">
+            <p>Altura: 1.7m</p>
+            <p>Peso: 90.5kg</p>
+            <p>Tipo: Fogo/Voador</p>
+            <p>Descrição: Respire chamas que queimam mais quentes quanto mais fortes se sente.</p>
+        </div>
+        <div id="squirtle" class="pokemon-info">
+            <h2>007# Squirtle</h2>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png" alt="Squirtle" style="max-width: 200px;">
+            <p>Altura: 0.5m</p>
+            <p>Peso: 9.0kg</p>
+            <p>Tipo: Água</p>
+            <p>Descrição: Quando se sente em perigo, ele se retrai em sua concha e lança jatos de água pela boca.</p>
+        </div>
+        <div id="wartortle" class="pokemon-info">
+            <h2>008# Wartortle</h2>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/8.png" alt="Wartortle" style="max-width: 200px;">
+            <p>Altura: 1.0m</p>
+            <p>Peso: 22.5kg</p>
+            <p>Tipo: Água</p>
+            <p>Descrição: De seu casco, ele dispara jatos de água com precisão esmagadora. Esse Pokémon raramente é encontrado em estado selvagem.</p>
+        </div>
+        <div id="blastoise" class="pokemon-info">
+    <h2>009# Blastoise</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png" alt="Blastoise" style="max-width: 200px">
+    <p>Altura: 1.6m</p>
+    <p>Peso: 85.5kg</p>
+    <p>Tipo: Água</p>
+    <p>Descrição: Blastoise tem canhões de água que dispara de sua concha. Esses canhões podem disparar água com tanta força que pode perfurar aço.</p>
+</div>
+<div id="caterpie" class="pokemon-info">
+    <h2>010# Caterpie</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10.png" alt="Caterpie" style="max-width: 200px;">
+    <p>Altura: 0.3m</p>
+    <p>Peso: 2.9kg</p>
+    <p>Tipo: Inseto</p>
+    <p>Descrição: Se atacado, ele solta um odor forte de seus antenas, afugentando assim o inimigo. Ele se protege também, enrolando em torno de si mesmo.</p>
+</div>
+<div id="metapod" class="pokemon-info">
+    <h2>011# Metapod</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/11.png" alt="Metapod" style="max-width: 200px;">
+    <p>Altura: 0.7m</p>
+    <p>Peso: 9.9kg</p>
+    <p>Tipo: Inseto</p>
+    <p>Descrição: Uma vez que ele evolui, ele endurece seu casco para proteger-se contra os ataques.</p>
+</div>
+<div id="butterfree" class="pokemon-info">
+    <h2>012# Butterfree</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/12.png" alt="Butterfree" style="max-width: 200px;">
+    <p>Altura: 1.1m</p>
+    <p>Peso: 32.0kg</p>
+    <p>Tipo: Inseto/Voador</p>
+    <p>Descrição: Butterfree tem um padrão de voo irregular. Ele é constantemente batendo suas asas, resultando em poeira fina que escurece o céu.</p>
+</div>
+<div id="weedle" class="pokemon-info">
+    <h2>013# Weedle</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/13.png" alt="Weedle" style="max-width: 200px;">
+    <p>Altura: 0.3m</p>
+    <p>Peso: 3.2kg</p>
+    <p>Tipo: Inseto/Venenoso</p>
+    <p>Descrição: Normalmente encontrado em florestas, parques e jardins. Ele tem um ferrão venenoso na sua cabeça.</p>
+</div>
+<div id="kakuna" class="pokemon-info">
+    <h2>014# Kakuna</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/14.png" alt="Kakuna" style="max-width: 200px;">
+    <p>Altura: 0.6m</p>
+    <p>Peso: 10.0kg</p>
+    <p>Tipo: Inseto/Venenoso</p>
+    <p>Descrição: Kakuna permanece praticamente imóvel durante a maior parte do tempo. Seu processo de evolução é muito lento.</p>
+</div>
+<div id="beedrill" class="pokemon-info">
+    <h2>015# Beedrill</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/15.png" alt="Beedrill" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 29.5kg</p>
+    <p>Tipo: Inseto/Venenoso</p>
+    <p>Descrição: Beedrill voa em ziguezague rapidamente e ataca agressivamente com suas picadas venenosas.</p>
+</div> 
+<div id="pidgey" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>016# Pidgey</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/16.png" alt="Pidgey" style="max-width: 200px;">
+    <p>Altura: 0.3m</p>
+    <p>Peso: 1.8kg</p>
+    <p>Tipo: Normal/Voador</p>
+    <p>Descrição: Pidgey tem um excelente senso de direção. Ele é capaz de encontrar seu ninho, mesmo que esteja a quilômetros de distância de casa.</p>
+</div>
+<div id="pidgeotto" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>017# Pidgeotto</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/17.png" alt="Pidgeotto" style="max-width: 200px;">
+    <p>Altura: 1.1m</p>
+    <p>Peso: 30.0kg</p>
+    <p>Tipo: Normal/Voador</p>
+    <p>Descrição: Pidgeotto tem uma visão incrivelmente nítida. É capaz de ver objetos a quilômetros de distância.</p>
+</div>
+<div id="pidgeot" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>018# Pidgeot</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/18.png" alt="Pidgeot" style="max-width: 200px;">
+    <p>Altura: 1.5m</p>
+    <p>Peso: 39.5kg</p>
+    <p>Tipo: Normal/Voador</p>
+    <p>Descrição: Pidgeot é conhecido por sua capacidade de voar em grandes altitudes. Ele raramente é visto no chão.</p>
+</div>
+<div id="rattata" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>019# Rattata</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/19.png" alt="Rattata" style="max-width: 200px;">
+    <p>Altura: 0.3m</p>
+    <p>Peso: 3.5kg</p>
+    <p>Tipo: Normal</p>
+    <p>Descrição: Rattata é um roedor noturno. É muito ativo durante a noite, quando procura por comida.</p>
+</div>
+<div id="raticate" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>020# Raticate</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/20.png" alt="Raticate" style="max-width: 200px;">
+    <p>Altura: 0.7m</p>
+    <p>Peso: 18.5kg</p>
+    <p>Tipo: Normal</p>
+    <p>Descrição: Raticate tem grandes incisivos que nunca param de crescer. Ele precisa roê-los continuamente para mantê-los desgastados.</p>
+</div>
+<div id="spearow" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>021# Spearow</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/21.png" alt="Spearow" style="max-width: 200px;">
+    <p>Altura: 0.3m</p>
+    <p>Peso: 2.0kg</p>
+    <p>Tipo: Normal/Voador</p>
+    <p>Descrição: Spearow tem um bico curvo e afiado que é capaz de perfurar a casca mais dura.</p>
+</div>
+<div id="fearow" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>022# Fearow</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/22.png" alt="Fearow" style="max-width: 200px;">
+    <p>Altura: 1.2m</p>
+    <p>Peso: 38.0kg</p>
+    <p>Tipo: Normal/Voador</p>
+    <p>Descrição: Fearow tem uma visão incrivelmente nítida. É capaz de ver objetos a quilômetros de distância.</p>
+</div>
+<div id="ekans" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>023# Ekans</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/23.png" alt="Ekans" style="max-width: 200px;">
+    <p>Altura: 2.0m</p>
+    <p>Peso: 6.9kg</p>
+    <p>Tipo: Venenoso</p>
+    <p>Descrição: Ekans espreita pelo campo à noite em busca de presas. Ele é muito ágil e pode se enrolar em torno de suas presas antes que elas percebam.</p>
+</div>
+<div id="arbok" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>024# Arbok</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/24.png" alt="Arbok" style="max-width: 200px;">
+    <p>Altura: 3.5m</p>
+    <p>Peso: 65.0kg</p>
+    <p>Tipo: Venenoso</p>
+    <p>Descrição: Arbok pode deslizar seu corpo por baixo do solo, deixando apenas a coroa de sua cabeça exposta enquanto vigia seu território.</p>
+</div>
+<div id="pikachu" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>025# Pikachu</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu" style="max-width: 200px;">
+    <p>Altura: 0.4m</p>
+    <p>Peso: 6.0kg</p>
+    <p>Tipo: Elétrico</p>
+    <p>Descrição: Pikachu tem bolsas elétricas nas bochechas. Quando se encontra com outros Pikachu, ele pode soltar faíscas para se comunicar.</p>
+</div>
+<div id="raichu" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>026# Raichu</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/26.png" alt="Raichu" style="max-width: 200px;">
+    <p>Altura: 0.8m</p>
+    <p>Peso: 30.0kg</p>
+    <p>Tipo: Elétrico</p>
+    <p>Descrição: Raichu tem uma carga elétrica forte o suficiente para derrubar um Elefante. É conhecido por gerar eletricidade simplesmente esfregando as bochechas.</p>
+</div>
+<div id="sandshrew" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>027# Sandshrew</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/27.png" alt="Sandshrew" style="max-width: 200px;">
+    <p>Altura: 0.6m</p>
+    <p>Peso: 12.0kg</p>
+    <p>Tipo: Terrestre</p>
+    <p>Descrição: Sandshrew tem uma pele áspera e dura que funciona como uma armadura. Ele rola para se proteger de predadores.</p>
+</div>
+<div id="sandslash" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>028# Sandslash</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/28.png" alt="Sandslash" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 29.5kg</p>
+    <p>Tipo: Terrestre</p>
+    <p>Descrição: Sandslash é capaz de desviar rapidamente dos ataques de seus oponentes. Ele também pode cavar túneis com suas garras afiadas.</p>
+</div>
+<div id="nidoran-f" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>029# Nidoran ♀</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/29.png" alt="Nidoran ♀" style="max-width: 200px;">
+    <p>Altura: 0.4m</p>
+    <p>Peso: 7.0kg</p>
+    <p>Tipo: Venenoso</p>
+    <p>Descrição: Nidoran ♀ tem uma natureza tímida e é facilmente assustada. Ela ataca apenas quando se sente ameaçada.</p>
+</div>
+<div id="nidorina" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>030# Nidorina</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/30.png" alt="Nidorina" style="max-width: 200px;">
+    <p>Altura: 0.8m</p>
+    <p>Peso: 20.0kg</p>
+    <p>Tipo: Venenoso</p>
+    <p>Descrição: Nidorina é muito protetora de seu território. Ela usa sua cauda afiada para defender sua ninhada.</p>
+</div>
+<div id="nidoqueen" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>031# Nidoqueen</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/31.png" alt="Nidoqueen" style="max-width: 200px;">
+    <p>Altura: 1.3m</p>
+    <p>Peso: 60.0kg</p>
+    <p>Tipo: Venenoso/Terrestre</p>
+    <p>Descrição: Nidoqueen é conhecida por sua força e resistência. Ela é uma protetora feroz de seus filhotes.</p>
+</div>
+<div id="nidoran-m" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>032# Nidoran ♂</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/32.png" alt="Nidoran ♂" style="max-width: 200px;">
+    <p>Altura: 0.5m</p>
+    <p>Peso: 9.0kg</p>
+    <p>Tipo: Venenoso</p>
+    <p>Descrição: Nidoran ♂ é muito territorial e irá marcar seu território com urina para manter outros Pokémon afastados.</p>
+</div>
+<div id="nidorino" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>033# Nidorino</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/33.png" alt="Nidorino" style="max-width: 200px;">
+    <p>Altura: 0.9m</p>
+    <p>Peso: 19.5kg</p>
+    <p>Tipo: Venenoso</p>
+    <p>Descrição: Nidorino é muito protetor de seu território. Ele usará suas presas afiadas para intimidar invasores.</p>
+</div>
+<div id="nidoking" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>034# Nidoking</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/34.png" alt="Nidoking" style="max-width: 200px;">
+    <p>Altura: 1.4m</p>
+    <p>Peso: 62.0kg</p>
+    <p>Tipo: Venenoso/Terrestre</p>
+    <p>Descrição: Nidoking é conhecido por sua força incrível. Ele pode derrubar até mesmo as árvores mais resistentes com suas presas poderosas.</p>
+</div>
+<div id="clefairy" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>035# Clefairy</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/35.png" alt="Clefairy" style="max-width: 200px;">
+    <p>Altura: 0.6m</p>
+    <p>Peso: 7.5kg</p>
+    <p>Tipo: Fada</p>
+    <p>Descrição: Clefairy é conhecido por ser um Pokémon que traz boa sorte. Ele é frequentemente visto dançando sob a lua cheia.</p>
+</div>
+<div id="clefable" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>036# Clefable</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/36.png" alt="Clefable" style="max-width: 200px;">
+    <p>Altura: 1.3m</p>
+    <p>Peso: 40.0kg</p>
+    <p>Tipo: Fada</p>
+    <p>Descrição: Clefable é conhecido por sua natureza dócil e amigável. Ele é um favorito entre as crianças.</p>
+</div>
+<div id="vulpix" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>037# Vulpix</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/37.png" alt="Vulpix" style="max-width: 200px;">
+    <p>Altura: 0.6m</p>
+    <p>Peso: 9.9kg</p>
+    <p>Tipo: Fogo</p>
+    <p>Descrição: Vulpix tem uma beleza elegante e uma cauda brilhante que lança chamas quando se sente ameaçado.</p>
+</div>
+<div id="ninetales" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>038#  Ninetales</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/38.png" alt="Ninetales" style="max-width: 200px;">
+    <p>Altura: 1.1m</p>
+    <p>Peso: 19.9kg</p>
+    <p>Tipo: Fogo</p>
+    <p>Descrição: Ninetales é conhecido por sua inteligência e elegância. Diz-se que seu canto pode causar chuva.</p>
+</div>
+<div id="jigglypuff" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>039# Jigglypuff</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/39.png" alt="Jigglypuff" style="max-width: 200px;">
+    <p>Altura: 0.5m</p>
+    <p>Peso: 5.5kg</p>
+    <p>Tipo: Normal/Fada</p>
+    <p>Descrição: Jigglypuff tem uma voz suave e melódica que é capaz de acalmar até mesmo os Pokémon mais selvagens.</p>
+</div>
+<div id="wigglytuff" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>040# Wigglytuff</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/40.png" alt="Wigglytuff" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 12.0kg</p>
+    <p>Tipo: Normal/Fada</p>
+    <p>Descrição: Wigglytuff tem uma personalidade gentil e adora cantar para seus amigos. Sua voz é tão suave que pode fazer as pessoas adormecerem.</p>
+</div>
+<div id="zubat" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>041# Zubat</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/41.png" alt="Zubat" style="max-width: 200px;">
+    <p>Altura: 0.8m</p>
+    <p>Peso: 7.5kg</p>
+    <p>Tipo: Venenoso/Voador</p>
+    <p>Descrição: Zubat é conhecido por voar em círculos escuros. Ele usa sua visão sonar para se mover na escuridão.</p>
+</div>
+<div id="golbat" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>042# Golbat</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/42.png" alt="Golbat" style="max-width: 200px;">
+    <p>Altura: 1.6m</p>
+    <p>Peso: 55.0kg</p>
+    <p>Tipo: Venenoso/Voador</p>
+    <p>Descrição: Golbat tem uma boca gigante e pode sugar grandes quantidades de sangue em um único gole. Ele é muito temido por sua aparência assustadora.</p>
+</div>
+<div id="oddish" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>043# Oddish</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/43.png" alt="Oddish" style="max-width: 200px;">
+    <p>Altura: 0.5m</p>
+    <p>Peso: 5.4kg</p>
+    <p>Tipo: Grama/Venenoso</p>
+    <p>Descrição: Oddish é conhecido por florescer sob a luz do sol. Sua folhagem é muitas vezes usada em poções de cura.</p>
+</div>
+<div id="gloom" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>044# Gloom</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/44.png" alt="Gloom" style="max-width: 200px;">
+    <p>Altura: 0.8m</p>
+    <p>Peso: 8.6kg</p>
+    <p>Tipo: Grama/Venenoso</p>
+    <p>Descrição: Gloom tem um cheiro terrível e é frequentemente evitado por outros Pokémon. No entanto, algumas pessoas o usam em remédios de ervas.</p>
+</div>
+<div id="vileplume" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>045# Vileplume</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/45.png" alt="Vileplume" style="max-width: 200px;">
+    <p>Altura: 1.2m</p>
+    <p>Peso: 18.6kg</p>
+    <p>Tipo: Grama/Venenoso</p>
+    <p>Descrição: Vileplume tem uma aura misteriosa e é frequentemente associado a lendas de florestas encantadas. Sua fragrância doce pode acalmar os corações das pessoas.</p>
+</div>
+<div id="paras" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>046# Paras</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/46.png" alt="Paras" style="max-width: 200px;">
+    <p>Altura: 0.3m</p>
+    <p>Peso: 5.4kg</p>
+    <p>Tipo: Inseto/Grama</p>
+    <p>Descrição: Paras é frequentemente encontrado em áreas úmidas. Ele se alimenta de cogumelos e usa suas esporas para se defender.</p>
+</div>
+<div id="parasect" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>047# Parasect</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/47.png" alt="Parasect" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 29.5kg</p>
+    <p>Tipo: Inseto/Grama</p>
+    <p>Descrição: Parasect é o resultado da simbiose entre Paras e o fungo que cresce em seu corpo. Ele é frequentemente usado como um escudo protetor.</p>
+</div>
+<div id="venonat" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>048# Venonat</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/48.png" alt="Venonat" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 30.0kg</p>
+    <p>Tipo: Inseto/Venenoso</p>
+    <p>Descrição: Venonat tem olhos grandes e luminosos que brilham no escuro. Ele usa suas antenas para detectar a presença de inimigos.</p>
+</div>
+<div id="venomoth" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>049# Venomoth</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/49.png" alt="Venomoth" style="max-width: 200px;">
+    <p>Altura: 1.5m</p>
+    <p>Peso: 12.5kg</p>
+    <p>Tipo: Inseto/Venenoso</p>
+    <p>Descrição: Venomoth é um predador noturno que caça suas presas com sua habilidade de voar silenciosamente. Ele é conhecido por seus padrões de asas coloridas.</p>
+</div>
+<div id="diglett" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>050# Diglett</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/50.png" alt="Diglett" style="max-width: 200px;">
+    <p>Altura: 0.2m</p>
+    <p>Peso: 0.8kg</p>
+    <p>Tipo: Terrestre</p>
+    <p>Descrição: Diglett vive em tocas subterrâneas que ele mesmo escava. Ele é conhecido por aparecer de repente e desaparecer em um piscar de olhos.</p>
+</div>
+<div id="dugtrio" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>051# Dugtrio</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/51.png" alt="Dugtrio" style="max-width: 200px;">
+    <p>Altura: 0.7m</p>
+    <p>Peso: 33.3kg</p>
+    <p>Tipo: Terrestre</p>
+    <p>Descrição: Dugtrio é composto por três Digletts que compartilham um túnel subterrâneo. Eles são muito rápidos e podem cavar túneis instantaneamente.</p>
+</div>
+<div id="meowth" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>052# Meowth</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/52.png" alt="Meowth" style="max-width: 200px;">
+    <p>Altura: 0.4m</p>
+    <p>Peso: 4.2kg</p>
+    <p>Tipo: Normal</p>
+    <p>Descrição: Meowth é conhecido por sua paixão por moedas brilhantes. Ele é frequentemente visto tentando roubar de pessoas e Pokémon.</p>
+</div>
+<div id="persian" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>053# Persian</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/53.png" alt="Persian" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 32.0kg</p>
+    <p>Tipo: Normal</p>
+    <p>Descrição: Persian é conhecido por sua graça e elegância. Ele é muito querido por sua aparência majestosa e pelagem sedosa.</p>
+</div>
+<div id="psyduck" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>054# Psyduck</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/54.png" alt="Psyduck" style="max-width: 200px;">
+    <p>Altura: 0.8m</p>
+    <p>Peso: 19.6kg</p>
+    <p>Tipo: Água</p>
+    <p>Descrição: Psyduck tem uma constante dor de cabeça que o faz segurar a cabeça com força. Quando a dor fica muito forte, ele libera poderes psíquicos incontroláveis.</p>
+</div>
+<div id="golduck" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>055# Golduck</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/55.png" alt="Golduck" style="max-width: 200px;">
+    <p>Altura: 1.7m</p>
+    <p>Peso: 76.6kg</p>
+    <p>Tipo: Água</p>
+    <p>Descrição: Golduck é um nadador poderoso que pode atravessar rios rápidos com facilidade. Ele é conhecido por sua agilidade e habilidades aquáticas.</p>
+</div>
+<div id="mankey" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>056# Mankey</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/56.png" alt="Mankey" style="max-width: 200px;">
+    <p>Altura: 0.5m</p>
+    <p>Peso: 28.0kg</p>
+    <p>Tipo: Lutador</p>
+    <p>Descrição: Mankey é um Pokémon muito temperamental que pode ficar furioso em um instante. Ele é frequentemente visto treinando sua força física.</p>
+</div>
+<div id="primeape" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>057# Primeape</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/57.png" alt="Primeape" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 32.0kg</p>
+    <p>Tipo: Lutador</p>
+    <p>Descrição: Primeape é extremamente agressivo e nunca recua de uma luta. Sua raiva é tão intensa que é capaz de torná-lo invencível.</p>
+</div>
+<div id="growlithe" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>058# Growlithe</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/58.png" alt="Growlithe" style="max-width: 200px;">
+    <p>Altura: 0.7m</p>
+    <p>Peso: 19.0kg</p>
+    <p>Tipo: Fogo</p>
+    <p>Descrição: Growlithe é um parceiro leal que protege seus treinadores com coragem. Ele é muito popular entre os oficiais de polícia.</p>
+</div>
+<div id="arcanine" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>059# Arcanine</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/59.png" alt="Arcanine" style="max-width: 200px;">
+    <p>Altura: 1.9m</p>
+    <p>Peso: 155.0kg</p>
+    <p>Tipo: Fogo</p>
+    <p>Descrição: Arcanine é conhecido como o "Pokémon Lendário" por sua majestade e força. Ele é um dos Pokémon mais respeitados.</p>
+</div>
+<div id="poliwag" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>060# Poliwag</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/60.png" alt="Poliwag" style="max-width: 200px;">
+    <p>Altura: 0.6m</p>
+    <p>Peso: 12.4kg</p>
+    <p>Tipo: Água</p>
+    <p>Descrição: Poliwag é conhecido por seu movimento hipnótico e constante balançar de suas bochechas. Ele é muito ágil na água.</p>
+</div>
+<div id="poliwhirl" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>061# Poliwhirl</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/61.png" alt="Poliwhirl" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 20.0kg</p>
+    <p>Tipo: Água</p>
+    <p>Descrição: Poliwhirl tem uma pele úmida e lisa que o torna muito escorregadio. Ele é excelente em natação e pode nadar rapidamente até mesmo em correntes fortes.</p>
+</div>
+<div id="poliwrath" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>062# Poliwrath</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/62.png" alt="Poliwrath" style="max-width: 200px;">
+    <p>Altura: 1.3m</p>
+    <p>Peso: 54.0kg</p>
+    <p>Tipo: Água/Lutador</p>
+    <p>Descrição: Poliwrath é conhecido por sua força impressionante e habilidades de luta. Ele é um nadador excepcional e pode atravessar oceanos inteiros.</p>
+</div>
+<div id="abra" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>063# Abra</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/63.png" alt="Abra" style="max-width: 200px;">
+    <p>Altura: 0.9m</p>
+    <p>Peso: 19.5kg</p>
+    <p>Tipo: Psíquico</p>
+    <p>Descrição: Abra é um Pokémon tímido que é conhecido por seus poderes psíquicos. Ele pode perceber eventos futuros e se teletransportar para fugir de perigos.</p>
+</div>
+<div id="kadabra" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>064# Kadabra</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/64.png" alt="Kadabra" style="max-width: 200px;">
+    <p>Altura: 1.3m</p>
+    <p>Peso: 56.5kg</p>
+    <p>Tipo: Psíquico</p>
+    <p>Descrição: Kadabra tem um QI extremamente alto e é capaz de calcular milhares de movimentos à frente. Ele é um mestre na manipulação de objetos com seus poderes psíquicos.</p>
+</div>
+<div id="alakazam" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>065# Alakazam</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/65.png" alt="Alakazam" style="max-width: 200px;">
+    <p>Altura: 1.5m</p>
+    <p>Peso: 48.0kg</p>
+    <p>Tipo: Psíquico</p>
+    <p>Descrição: Alakazam tem um QI incrivelmente alto e é capaz de memorizar tudo o que já viu. Ele é um mestre da telecinese e pode mover objetos com sua mente.</p>
+</div>
+<div id="machop" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>066# Machop</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/66.png" alt="Machop" style="max-width: 200px;">
+    <p>Altura: 0.8m</p>
+    <p>Peso: 19.5kg</p>
+    <p>Tipo: Lutador</p>
+    <p>Descrição: Machop treina constantemente para aumentar sua força muscular. Ele pode levantar montanhas com facilidade.</p>
+</div>
+<div id="machoke" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>067# Machoke</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/67.png" alt="Machoke" style="max-width: 200px;">
+    <p>Altura: 1.5m</p>
+    <p>Peso: 70.5kg</p>
+    <p>Tipo: Lutador</p>
+    <p>Descrição: Machoke é incrivelmente forte e é frequentemente visto levantando e carregando cargas pesadas. Ele é muito respeitado entre outros Pokémon devido à sua imensa força.</p>
+</div>
+<div id="machamp" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>068# Machamp</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/68.png" alt="Machamp" style="max-width: 200px;">
+    <p>Altura: 1.6m</p>
+    <p>Peso: 130.0kg</p>
+    <p>Tipo: Lutador</p>
+    <p>Descrição: Machamp é conhecido por sua força esmagadora e músculos imensos. Ele é um mestre em artes marciais e pode lançar poderosos golpes com facilidade.</p>
+</div>
+<div id="bellsprout" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>069# Bellsprout</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/69.png" alt="Bellsprout" style="max-width: 200px;">
+    <p>Altura: 0.7m</p>
+    <p>Peso: 4.0kg</p>
+    <p>Tipo: Grama/Venenoso</p>
+    <p>Descrição: Bellsprout captura presas usando seus tentáculos afiados e as dissolve com seu suco digestivo poderoso.</p>
+</div>
+<div id="weepinbell" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>070# Weepinbell</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/70.png" alt="Weepinbell" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 6.4kg</p>
+    <p>Tipo: Grama/Venenoso</p>
+    <p>Descrição: Weepinbell ataca suas presas usando seu cheiro doce e nocauteia-os com suas folhas afiadas.</p>
+</div>
+<div id="victreebel" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>071# Victreebel</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/71.png" alt="Victreebel" style="max-width: 200px;">
+    <p>Altura: 1.7m</p>
+    <p>Peso: 15.5kg</p>
+    <p>Tipo: Grama/Venenoso</p>
+    <p>Descrição: Victreebel é conhecido por seu cheiro doce e mortal que atrai presas para dentro de suas enormes folhas. Uma vez presas, elas são dissolvidas em seu suco digestivo.</p>
+</div>
+<div id="tentacool" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>072# Tentacool</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/72.png" alt="Tentacool" style="max-width: 200px;">
+    <p>Altura: 0.9m</p>
+    <p>Peso: 45.5kg</p>
+    <p>Tipo: Água/Venenoso</p>
+    <p>Descrição: Tentacool flutua pacificamente na superfície do oceano, mas sua picada venenosa pode ser fatal para qualquer nadador descuidado.</p>
+</div>
+<div id="tentacruel" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>073# Tentacruel</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/73.png" alt="Tentacruel" style="max-width: 200px;">
+    <p>Altura: 1.6m</p>
+    <p>Peso: 55.0kg</p>
+    <p>Tipo: Água/Venenoso</p>
+    <p>Descrição: Tentacruel é extremamente inteligente e é conhecido por seu comportamento cruel. Ele pode capturar presas com seus tentáculos e paralisá-las com seu veneno poderoso.</p>
+</div>
+<div id="geodude" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>074# Geodude</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/74.png" alt="Geodude" style="max-width: 200px;">
+    <p>Altura: 0.4m</p>
+    <p>Peso: 20.0kg</p>
+    <p>Tipo: Pedra/Terrestre</p>
+    <p>Descrição: Geodude é encontrado nas montanhas e cavernas. Ele pode se locomover rolando ou flutuando com seus braços.</p>
+</div>
+<div id="graveler" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>075# Graveler</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/75.png" alt="Graveler" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 105.0kg</p>
+    <p>Tipo: Pedra/Terrestre</p>
+    <p>Descrição: Graveler é conhecido por rolar pelas montanhas em velocidades surpreendentes. Ele pode causar avalanches com seu peso.</p>
+</div>
+<div id="golem" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>076# Golem</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/76.png" alt="Golem" style="max-width: 200px;">
+    <p>Altura: 1.4m</p>
+    <p>Peso: 300.0kg</p>
+    <p>Tipo: Pedra/Terrestre</p>
+    <p>Descrição: Golem é incrivelmente resistente e pode resistir a explosões e impactos fortes. Ele é conhecido por rolar montanha abaixo em alta velocidade.</p>
+</div>
+<div id="ponyta" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>077# Ponyta</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/77.png" alt="Ponyta" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 30.0kg</p>
+    <p>Tipo: Fogo</p>
+    <p>Descrição: Ponyta corre livremente pelas planícies, deixando um rastro de chamas em seu caminho. Ele é conhecido por sua velocidade e beleza.</p>
+</div>
+<div id="rapidash" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>078# Rapidash</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/78.png" alt="Rapidash" style="max-width: 200px;">
+    <p>Altura: 1.7m</p>
+    <p>Peso: 95.0kg</p>
+    <p>Tipo: Fogo</p>
+    <p>Descrição: Rapidash é incrivelmente rápido e pode correr a velocidades incríveis. Suas crinas em chamas brilham intensamente enquanto corre.</p>
+</div>
+<div id="slowpoke" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>079# Slowpoke</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/79.png" alt="Slowpoke" style="max-width: 200px;">
+    <p>Altura: 1.2m</p>
+    <p>Peso: 36.0kg</p>
+    <p>Tipo: Água/Psíquico</p>
+    <p>Descrição: Slowpoke é muito lento e relaxado. Ele pode ficar imóvel por horas enquanto espera pacientemente por presas.</p>
+</div>
+<div id="slowbro" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>080# Slowbro</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/80.png" alt="Slowbro" style="max-width: 200px;">
+    <p>Altura: 1.6m</p>
+    <p>Peso: 78.5kg</p>
+    <p>Tipo: Água/Psíquico</p>
+    <p>Descrição: Slowbro tem uma concha em suas costas que cresceu como resultado de uma simbiose com um Shellder. Ele é lento e tranquilo, mas incrivelmente poderoso.</p>
+</div>
+<div id="magnemite" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>081# Magnemite</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/81.png" alt="Magnemite" style="max-width: 200px;">
+    <p>Altura: 0.3m</p>
+    <p>Peso: 6.0kg</p>
+    <p>Tipo: Elétrico/Aço</p>
+    <p>Descrição: Magnemite flutua no ar usando seu campo magnético. Ele pode se unir a outros Magnemites para formar grupos poderosos.</p>
+</div>
+<div id="magneton" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>082# Magneton</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/82.png" alt="Magneton" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 60.0kg</p>
+    <p>Tipo: Elétrico/Aço</p>
+    <p>Descrição: Magneton é formado por três Magnemites unidos por campos magnéticos. Ele é muito poderoso e pode gerar campos magnéticos extremamente fortes.</p>
+</div>
+<div id="farfetchd" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>083# Farfetch'd</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/83.png" alt="Farfetch'd" style="max-width: 200px;">
+    <p>Altura: 0.8m</p>
+    <p>Peso: 15.0kg</p>
+    <p>Tipo: Normal/Voador</p>
+    <p>Descrição: Farfetch'd é sempre visto segurando um alho-poró. Ele é habilidoso em usar esse alho-poró como arma em batalhas.</p>
+</div>
+<div id="doduo" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>084# Doduo</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/84.png" alt="Doduo" style="max-width: 200px;">
+    <p>Altura: 1.4m</p>
+    <p>Peso: 39.2kg</p>
+    <p>Tipo: Normal/Voador</p>
+    <p>Descrição: Doduo tem duas cabeças que pensam e agem independentemente. Ele é muito rápido e ágil, o que o torna um excelente corredor.</p>
+</div>
+<div id="dodrio" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>085# Dodrio</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/85.png" alt="Dodrio" style="max-width: 200px;">
+    <p>Altura: 1.8m</p>
+    <p>Peso: 85.2kg</p>
+    <p>Tipo: Normal/Voador</p>
+    <p>Descrição: Dodrio tem três cabeças que se movem independentemente. Ele é incrivelmente rápido e ágil.</p>
+</div>
+<div id="seel" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>086# Seel</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/86.png" alt="Seel" style="max-width: 200px;">
+    <p>Altura: 1.1m</p>
+    <p>Peso: 90.0kg</p>
+    <p>Tipo: Água</p>
+    <p>Descrição: Seel é coberto por uma pele grossa e oleosa que o protege do frio. Ele é muito habilidoso em nadar e mergulhar.</p>
+</div>
+<div id="dewgong" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>087# Dewgong</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/87.png" alt="Dewgong" style="max-width: 200px;">
+    <p>Altura: 1.7m</p>
+    <p>Peso: 120.0kg</p>
+    <p>Tipo: Água/Gelo</p>
+    <p>Descrição: Dewgong é uma excelente nadadora e pode mergulhar a grandes profundidades. Ele é habilidoso em criar caminhos no gelo com sua cauda.</p>
+</div>
+<div id="grimer" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>088# Grimer</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/88.png" alt="Grimer" style="max-width: 200px;">
+    <p>Altura: 0.9m</p>
+    <p>Peso: 30.0kg</p>
+    <p>Tipo: Venenoso</p>
+    <p>Descrição: Grimer é feito de uma substância pegajosa que pode corroer qualquer coisa. Ele é frequentemente encontrado em áreas urbanas sujas e poluídas.</p>
+</div>
+<div id="muk" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>089# Muk</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/89.png" alt="Muk" style="max-width: 200px;">
+    <p>Altura: 1.2m</p>
+    <p>Peso: 30.0kg</p>
+    <p>Tipo: Venenoso</p>
+    <p>Descrição: Muk é uma massa pegajosa e tóxica. Ele emite um cheiro horrível que pode ser sentido a quilômetros de distância.</p>
+</div>
+<div id="shellder" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>090# Shellder</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/90.png" alt="Shellder" style="max-width: 200px;">
+    <p>Altura: 0.3m</p>
+    <p>Peso: 4.0kg</p>
+    <p>Tipo: Água</p>
+    <p>Descrição: Shellder tem uma concha dura que o protege de predadores. Ele pode prender-se a rochas ou outros Pokémon com sua língua afiada.</p>
+</div>
+<div id="cloyster" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>091# Cloyster</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/91.png" alt="Cloyster" style="max-width: 200px;">
+    <p>Altura: 1.5m</p>
+    <p>Peso: 132.5kg</p>
+    <p>Tipo: Água/Gelo</p>
+    <p>Descrição: Cloyster é protegido por uma concha extremamente dura e afiada. Ele é um nadador ágil e pode atacar com poderosos jatos de água.</p>
+</div>
+<div id="gastly" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>092# Gastly</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/92.png" alt="Gastly" style="max-width: 200px;">
+    <p>Altura: 1.3m</p>
+    <p>Peso: 0.1kg</p>
+    <p>Tipo: Fantasma/Venenoso</p>
+    <p>Descrição: Gastly é feito de gás venenoso. Ele pode se transformar em qualquer forma que desejar para assustar ou confundir seus oponentes.</p>
+</div>
+<div id="haunter" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>093# Haunter</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/93.png" alt="Haunter" style="max-width: 200px;">
+    <p>Altura: 1.6m</p>
+    <p>Peso: 0.1kg</p>
+    <p>Tipo: Fantasma/Venenoso</p>
+    <p>Descrição: Haunter é conhecido por assustar e pregar peças em pessoas e outros Pokémon. Ele pode se mover através das paredes e objetos sólidos.</p>
+</div>
+<div id="gengar" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>094# Gengar</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png" alt="Gengar" style="max-width: 200px;">
+    <p>Altura: 1.5m</p>
+    <p>Peso: 40.5kg</p>
+    <p>Tipo: Fantasma/Venenoso</p>
+    <p>Descrição: Gengar é formado a partir da união de várias almas de pessoas e Pokémon. Ele pode se esconder na sombra de qualquer objeto.</p>
+</div>
+<div id="onix" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>095# Onix</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/95.png" alt="Onix" style="max-width: 200px;">
+    <p>Altura: 8.8m</p>
+    <p>Peso: 210.0kg</p>
+    <p>Tipo: Pedra/Terra</p>
+    <p>Descrição: Onix é uma serpente rochosa que pode cavar túneis subterrâneos. Ele é muito resistente e pode esmagar qualquer coisa com seu corpo sólido.</p>
+</div>
+<div id="drowzee" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>096# Drowzee</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/96.png" alt="Drowzee" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 32.4kg</p>
+    <p>Tipo: Psíquico</p>
+    <p>Descrição: Drowzee se alimenta dos sonhos das pessoas enquanto dormem. Ele pode controlar os sonhos de outras pessoas usando suas habilidades psíquicas.</p>
+</div>
+<div id="hypno" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>097# Hypno</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/97.png" alt="Hypno" style="max-width: 200px;">
+    <p>Altura: 1.6m</p>
+    <p>Peso: 75.6kg</p>
+    <p>Tipo: Psíquico</p>
+    <p>Descrição: Hypno pode hipnotizar suas vítimas usando apenas o movimento de seu pêndulo. Ele gosta de se alimentar dos sonhos dos outros.</p>
+</div>
+<div id="krabby" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>098# Krabby</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/98.png" alt="Krabby" style="max-width: 200px;">
+    <p>Altura: 0.4m</p>
+    <p>Peso: 6.5kg</p>
+    <p>Tipo: Água</p>
+    <p>Descrição: Krabby tem uma pinça muito forte que ele usa para quebrar conchas e se defender de predadores. Ele é frequentemente encontrado em praias rochosas.</p>
+</div>
+<div id="kingler" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>099# Kingler</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/99.png" alt="Kingler" style="max-width: 200px;">
+    <p>Altura: 1.3m</p>
+    <p>Peso: 60.0kg</p>
+    <p>Tipo: Água</p>
+    <p>Descrição: Kingler tem uma pinça enorme que ele usa para esmagar qualquer coisa que cruzar seu caminho. Ele é um excelente nadador e pode nadar em águas profundas.</p>
+</div>
+<div id="voltorb" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>100# Voltorb</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/100.png" alt="Voltorb" style="max-width: 200px;">
+    <p>Altura: 0.5m</p>
+    <p>Peso: 10.4kg</p>
+    <p>Tipo: Elétrico</p>
+    <p>Descrição: Voltorb é frequentemente confundido com uma Pokébola. Ele pode explodir a qualquer momento sem aviso prévio.</p>
+</div>
+<div id="electrode" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>101# Electrode</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/101.png" alt="Electrode" style="max-width: 200px;">
+    <p>Altura: 1.2m</p>
+    <p>Peso: 66.6kg</p>
+    <p>Tipo: Elétrico</p>
+    <p>Descrição: Electrode é conhecido por ser altamente explosivo. Ele pode explodir a qualquer momento, causando danos severos a quem estiver por perto.</p>
+</div>
+<div id="exeggcute" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>102# Exeggcute</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/102.png" alt="Exeggcute" style="max-width: 200px;">
+    <p>Altura: 0.4m</p>
+    <p>Peso: 2.5kg</p>
+    <p>Tipo: Grama/Psíquico</p>
+    <p>Descrição: Exeggcute é formado por seis ovos que são sempre juntos. Eles se comunicam uns com os outros usando ondas cerebrais.</p>
+</div>
+<div id="exeggutor" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>103# Exeggutor</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/103.png" alt="Exeggutor" style="max-width: 200px;">
+    <p>Altura: 2.0m</p>
+    <p>Peso: 120.0kg</p>
+    <p>Tipo: Grama/Psíquico</p>
+    <p>Descrição: Exeggutor é conhecido por ter um pescoço extremamente longo. Ele pode invocar o poder do sol para lançar ataques devastadores.</p>
+</div>
+<div id="cubone" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>104# Cubone</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/104.png" alt="Cubone" style="max-width: 200px;">
+    <p>Altura: 0.4m</p>
+    <p>Peso: 6.5kg</p>
+    <p>Tipo: Terrestre</p>
+    <p>Descrição: Cubone usa o crânio de sua mãe falecida como uma máscara. Ele é conhecido por chorar à noite ao se lembrar de sua mãe.</p>
+</div>
+<div id="marowak" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>105# Marowak</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/105.png" alt="Marowak" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 45.0kg</p>
+    <p>Tipo: Terrestre</p>
+    <p>Descrição: Marowak é um excelente lutador e usa osso de sua mãe como uma arma. Ele é conhecido por ter grande respeito pelos seus ancestrais.</p>
+</div>
+<div id="hitmonlee" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>106# Hitmonlee</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/106.png" alt="Hitmonlee" style="max-width: 200px;">
+    <p>Altura: 1.5m</p>
+    <p>Peso: 49.8kg</p>
+    <p>Tipo: Lutador</p>
+    <p>Descrição: Hitmonlee é um mestre da luta de pernas e pode chutar rapidamente em todas as direções. Ele é muito disciplinado e está sempre treinando.</p>
+</div>
+<div id="hitmonchan" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>107# Hitmonchan</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/107.png" alt="Hitmonchan" style="max-width: 200px;">
+    <p>Altura: 1.4m</p>
+    <p>Peso: 50.2kg</p>
+    <p>Tipo: Lutador</p>
+    <p>Descrição: Hitmonchan é conhecido por seus punhos extremamente rápidos. Ele pode lançar golpes devastadores em apenas alguns segundos.</p>
+</div>
+<div id="lickitung" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>108# Lickitung</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/108.png" alt="Lickitung" style="max-width: 200px;">
+    <p>Altura: 1.2m</p>
+    <p>Peso: 65.5kg</p>
+    <p>Tipo: Normal</p>
+    <p>Descrição: Lickitung pode estender sua língua para capturar presas distantes. Ele é conhecido por lamber qualquer coisa que pareça interessante.</p>
+</div>
+<div id="koffing" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>109# Koffing</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/109.png" alt="Koffing" style="max-width: 200px;">
+    <p>Altura: 0.6m</p>
+    <p>Peso: 1.0kg</p>
+    <p>Tipo: Venenoso</p>
+    <p>Descrição: Koffing emite gases tóxicos de seu corpo. Ele pode se expandir e flutuar no ar para se defender de predadores.</p>
+</div>
+<div id="weezing" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>110# Weezing</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/110.png" alt="Weezing" style="max-width: 200px;">
+    <p>Altura: 1.2m</p>
+    <p>Peso: 9.5kg</p>
+    <p>Tipo: Venenoso</p>
+    <p>Descrição: Weezing é formado por dois Koffings que se fundiram. Ele é conhecido por emitir gases tóxicos que são prejudiciais ao meio ambiente.</p>
+</div>
+<div id="rhyhorn" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>111# Rhyhorn</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/111.png" alt="Rhyhorn" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 115.0kg</p>
+    <p>Tipo: Rocha/Terrestre</p>
+    <p>Descrição: Rhyhorn tem uma pele extremamente dura que o protege de ataques inimigos. Ele é conhecido por carregar cargas pesadas sem se cansar.</p>
+</div>
+<div id="rhydon" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>112# Rhydon</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/112.png" alt="Rhydon" style="max-width: 200px;">
+    <p>Altura: 1.9m</p>
+    <p>Peso: 120.0kg</p>
+    <p>Tipo: Rocha/Terrestre</p>
+    <p>Descrição: Rhydon é conhecido por sua força e resistência incríveis. Ele pode perfurar até as rochas mais duras com seu chifre afiado.</p>
+</div>
+<div id="chansey" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>113# Chansey</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/113.png" alt="Chansey" style="max-width: 200px;">
+    <p>Altura: 1.1m</p>
+    <p>Peso: 34.6kg</p>
+    <p>Tipo: Normal</p>
+    <p>Descrição: Chansey é conhecido por sua gentileza e capacidade de curar ferimentos usando seus ovos. Ele é muito raro e geralmente é encontrado em hospitais Pokémon.</p>
+</div>
+
+<div id="tangela" class="pokemon-info">
+    <div class="pokeball-background"></div>
+    <h2>114# Tangela</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/114.png" alt="Tangela" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 35.0kg</p>
+    <p>Tipo: Grama</p>
+    <p>Descrição: Tangela é coberto por vinhas azuis que são extremamente elásticas. Ele pode prender seus oponentes com suas vinhas e drenar sua energia.</p>
+</div>
+
+
+
+
+
+
+<div id="kangaskhan" class="pokemon-info">
+    <h2>115# Kangaskhan</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/115.png" alt="Kangaskhan" style="max-width: 200px;">
+    <p>Altura: 2.2m</p>
+    <p>Peso: 80.0kg</p>
+    <p>Tipo: Normal</p>
+    <p>Descrição: Kangaskhan é uma mãe protetora que protege ferozmente seus filhotes. Ela é conhecida por sua força e resistência.</p>
+</div>
+
+<div id="horsea" class="pokemon-info">
+    <h2>116# Horsea</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/116.png" alt="Horsea" style="max-width: 200px;">
+    <p>Altura: 0.4m</p>
+    <p>Peso: 8.0kg</p>
+    <p>Tipo: Água</p>
+    <p>Descrição: Horsea é um Pokémon aquático que pode comprimir seu corpo para evitar ser arrastado pelas correntezas do oceano.</p>
+</div>
+
+<div id="seadra" class="pokemon-info">
+    <h2>117# Seadra</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/117.png" alt="Seadra" style="max-width: 200px;">
+    <p>Altura: 1.2m</p>
+    <p>Peso: 25.0kg</p>
+    <p>Tipo: Água</p>
+    <p>Descrição: Seadra é a evolução de Horsea. Ele é capaz de nadar em velocidades incríveis e disparar jatos de água de seus orifícios nasais.</p>
+</div>
+
+<div id="goldeen" class="pokemon-info">
+    <h2>118# Goldeen</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/118.png" alt="Goldeen" style="max-width: 200px;">
+    <p>Altura: 0.6m</p>
+    <p>Peso: 15.0kg</p>
+    <p>Tipo: Água</p>
+    <p>Descrição: Goldeen é um Pokémon aquático conhecido por sua beleza elegante. Ele é muitas vezes visto nadando em cardumes em rios cristalinos.</p>
+</div>
+
+<div id="seaking" class="pokemon-info">
+    <h2>119# Seaking</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/119.png" alt="Seaking" style="max-width: 200px;">
+    <p>Altura: 1.3m</p>
+    <p>Peso: 39.0kg</p>
+    <p>Tipo: Água</p>
+    <p>Descrição: Seaking é a evolução de Goldeen. Ele é conhecido por sua força e agilidade ao nadar. Ele lidera cardumes de Goldeen em busca de alimento.</p>
+</div>
+
+<div id="staryu" class="pokemon-info">
+    <h2>120# Staryu</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/120.png" alt="Staryu" style="max-width: 200px;">
+    <p>Altura: 0.8m</p>
+    <p>Peso: 34.5kg</p>
+    <p>Tipo: Água</p>
+    <p>Descrição: Staryu é um Pokémon estelar que pode regenerar partes de seu corpo perdidas. Ele é frequentemente encontrado em águas tropicais.</p>
+</div>
+
+<div id="starmie" class="pokemon-info">
+    <h2>121# Starmie</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/121.png" alt="Starmie" style="max-width: 200px;">
+    <p>Altura: 1.1m</p>
+    <p>Peso: 80.0kg</p>
+    <p>Tipo: Água/Psíquico</p>
+    <p>Descrição: Starmie é a evolução de Staryu. Ele possui um núcleo brilhante em seu centro que emite luz intensa. Diz-se que ele pode prever mudanças climáticas.</p>
+</div>
+
+<div id="mrmime" class="pokemon-info">
+    <h2>122# Mr. Mime</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/122.png" alt="Mr. Mime" style="max-width: 200px;">
+    <p>Altura: 1.3m</p>
+    <p>Peso: 54.5kg</p>
+    <p>Tipo: Psíquico/Fada</p>
+    <p>Descrição: Mr. Mime é um Pokémon que adora brincar e fazer gestos para entreter as pessoas. Ele é frequentemente visto em circos e parques de diversão.</p>
+</div>
+
+<div id="scyther" class="pokemon-info">
+    <h2>123# Scyther</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/123.png" alt="Scyther" style="max-width: 200px;">
+    <p>Altura: 1.5m</p>
+    <p>Peso: 56.0kg</p>
+    <p>Tipo: Inseto/Voador</p>
+    <p>Descrição: Scyther é um Pokémon predador conhecido por sua velocidade e habilidade de cortar com suas lâminas afiadas. Ele é frequentemente visto em florestas densas.</p>
+</div>
+
+<div id="jynx" class="pokemon-info">
+    <h2>124# Jynx</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/124.png" alt="Jynx" style="max-width: 200px;">
+    <p>Altura: 1.4m</p>
+    <p>Peso: 40.6kg</p>
+    <p>Tipo: Gelo/Psíquico</p>
+    <p>Descrição: Jynx é um Pokémon que possui uma dança hipnótica. Ela é conhecida por seu charme sedutor e sua capacidade de lançar poderosos feitiços psíquicos.</p>
+</div>
+
+<div id="electabuzz" class="pokemon-info">
+    <h2>125# Electabuzz</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/125.png" alt="Electabuzz" style="max-width: 200px;">
+    <p>Altura: 1.1m</p>
+    <p>Peso: 30.0kg</p>
+    <p>Tipo: Elétrico</p>
+    <p>Descrição: Electabuzz é um Pokémon elétrico conhecido por sua capacidade de gerar descargas elétricas. Ele é frequentemente avistado em tempestades.</p>
+</div>
+
+<div id="magmar" class="pokemon-info">
+    <h2>126# Magmar</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/126.png" alt="Magmar" style="max-width: 200px;">
+    <p>Altura: 1.3m</p>
+    <p>Peso: 44.5kg</p>
+    <p>Tipo: Fogo</p>
+    <p>Descrição: Magmar é um Pokémon flamejante que possui um corpo repleto de chamas. Ele é frequentemente encontrado em vulcões ativos.</p>
+</div>
+
+<div id="pinsir" class="pokemon-info">
+    <h2>127# Pinsir</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/127.png" alt="Pinsir" style="max-width: 200px;">
+    <p>Altura: 1.5m</p>
+    <p>Peso: 55.0kg</p>
+    <p>Tipo: Inseto</p>
+    <p>Descrição: Pinsir é um Pokémon que possui grandes pinças poderosas. Ele é conhecido por sua força incrível e sua habilidade de cortar árvores com suas pinças.</p>
+</div>
+
+<div id="tauros" class="pokemon-info">
+    <h2>128# Tauros</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/128.png" alt="Tauros" style="max-width: 200px;">
+    <p>Altura: 1.4m</p>
+    <p>Peso: 88.4kg</p>
+    <p>Tipo: Normal</p>
+    <p>Descrição: Tauros é um Pokémon touro conhecido por sua natureza agressiva. Ele é frequentemente encontrado pastando em pradarias e campos abertos.</p>
+</div>
+
+<div id="magikarp" class="pokemon-info">
+    <h2>129# Magikarp</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/129.png" alt="Magikarp" style="max-width: 200px;">
+    <p>Altura: 0.9m</p>
+    <p>Peso: 10.0kg</p>
+    <p>Tipo: Água</p>
+    <p>Descrição: Magikarp é conhecido como o Pokémon mais fraco de todos. Ele é incapaz de nadar contra a correnteza e frequentemente é arrastado por rios.</p>
+</div>
+
+<div id="gyarados" class="pokemon-info">
+    <h2>130# Gyarados</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/130.png" alt="Gyarados" style="max-width: 200px;">
+    <p>Altura: 6.5m</p>
+    <p>Peso: 235.0kg</p>
+    <p>Tipo: Água/Voador</p>
+    <p>Descrição: Gyarados é a evolução de Magikarp. Ele é conhecido por sua natureza temperamental e sua capacidade de lançar ondas destrutivas com suas barbatanas.</p>
+</div>
+
+<div id="lapras" class="pokemon-info">
+    <h2>131# Lapras</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/131.png" alt="Lapras" style="max-width: 200px;">
+    <p>Altura: 2.5m</p>
+    <p>Peso: 220.0kg</p>
+    <p>Tipo: Água/Gelo</p>
+    <p>Descrição: Lapras é um Pokémon amigável que é conhecido por carregar pessoas em suas costas. Ele é visto com mais frequência em águas gélidas.</p>
+</div>
+
+<div id="ditto" class="pokemon-info">
+    <h2>132# Ditto</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/132.png" alt="Ditto" style="max-width: 200px;">
+    <p>Altura: 0.3m</p>
+    <p>Peso: 4.0kg</p>
+    <p>Tipo: Normal</p>
+    <p>Descrição: Ditto é um Pokémon único que pode transformar-se em qualquer outra forma Pokémon. Ele é encontrado principalmente em áreas urbanas.</p>
+</div>
+
+<div id="eevee" class="pokemon-info">
+    <h2>133# Eevee</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png" alt="Eevee" style="max-width: 200px;">
+    <p>Altura: 0.3m</p>
+    <p>Peso: 6.5kg</p>
+    <p>Tipo: Normal</p>
+    <p>Descrição: Eevee é um Pokémon versátil que possui a capacidade de evoluir para diferentes formas, dependendo das condições.</p>
+</div>
+
+<div id="vaporeon" class="pokemon-info">
+    <h2>134# Vaporeon</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/134.png" alt="Vaporeon" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 29.0kg</p>
+    <p>Tipo: Água</p>
+    <p>Descrição: Vaporeon é uma das evoluções de Eevee. Ele é capaz de converter seu corpo em água e nadar em alta velocidade.</p>
+</div>
+
+<div id="jolteon" class="pokemon-info">
+    <h2>135# Jolteon</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/135.png" alt="Jolteon" style="max-width: 200px;">
+    <p>Altura: 0.8m</p>
+    <p>Peso: 24.5kg</p>
+    <p>Tipo: Elétrico</p>
+    <p>Descrição: Jolteon é uma das evoluções de Eevee. Ele é capaz de liberar eletricidade estática de suas espinhas para atacar seus oponentes.</p>
+</div>
+
+<div id="flareon" class="pokemon-info">
+    <h2>136# Flareon</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/136.png" alt="Flareon" style="max-width: 200px;">
+    <p>Altura: 0.9m</p>
+    <p>Peso: 25.0kg</p>
+    <p>Tipo: Fogo</p>
+    <p>Descrição: Flareon é uma das evoluções de Eevee. Ele é capaz de liberar chamas intensas de suas células para incinerar seus oponentes.</p>
+</div>
+
+<div id="porygon" class="pokemon-info">
+    <h2>137# Porygon</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/137.png" alt="Porygon" style="max-width: 200px;">
+    <p>Altura: 0.8m</p>
+    <p>Peso: 36.5kg</p>
+    <p>Tipo: Normal</p>
+    <p>Descrição: Porygon é um Pokémon artificial que é composto por dados programados. Ele é capaz de se mover livremente no ciberespaço.</p>
+</div>
+
+<div id="omanyte" class="pokemon-info">
+    <h2>138# Omanyte</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/138.png" alt="Omanyte" style="max-width: 200px;">
+    <p>Altura: 0.4m</p>
+    <p>Peso: 7.5kg</p>
+    <p>Tipo: Rocha/Água</p>
+    <p>Descrição: Omanyte é um Pokémon fóssil que se assemelha a um cefalópode pré-histórico. Ele é capaz de se proteger em sua concha enrolada.</p>
+</div>
+<div id="omastar" class="pokemon-info">
+    <h2>139# Omastar</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/139.png" alt="Omastar" style="max-width: 200px;">
+    <p>Altura: 1.0m</p>
+    <p>Peso: 35.0kg</p>
+    <p>Tipo: Rocha/Água</p>
+    <p>Descrição: Omastar é um Pokémon marinho extinto que tem uma concha espiralada. Ele é capaz de aderir firmemente a rochas e recifes subaquáticos.</p>
+</div>
+
+<div id="kabuto" class="pokemon-info">
+    <h2>140# Kabuto</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/140.png" alt="Kabuto" style="max-width: 200px;">
+    <p>Altura: 0.5m</p>
+    <p>Peso: 11.5kg</p>
+    <p>Tipo: Rocha/Água</p>
+    <p>Descrição: Kabuto é um Pokémon fóssil que se assemelha a um trilobita pré-histórico. Ele é capaz de se mover rapidamente em ambientes aquáticos.</p>
+</div>
+
+
+<div id="kabutops" class="pokemon-info">
+    <h2>141# Kabutops</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/141.png" alt="Kabutops" style="max-width: 200px;">
+    <p>Altura: 1.3m</p>
+    <p>Peso: 40.5kg</p>
+    <p>Tipo: Rocha/Água</p>
+    <p>Descrição: Kabutops é um Pokémon pré-histórico que é especializado em ataques rápidos e precisos. Ele é capaz de cortar presas com suas lâminas afiadas.</p>
+</div>
+
+<div id="aerodactyl" class="pokemon-info">
+    <h2>142# Aerodactyl</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/142.png" alt="Aerodactyl" style="max-width: 200px;">
+    <p>Altura: 1.8m</p>
+    <p>Peso: 59.0kg</p>
+    <p>Tipo: Rocha/Voador</p>
+    <p>Descrição: Aerodactyl é um Pokémon fóssil que é conhecido por sua velocidade e agilidade no ar. Ele é temido por sua aparência assustadora.</p>
+</div>
+
+<div id="snorlax" class="pokemon-info">
+    <h2>143# Snorlax</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png" alt="Snorlax" style="max-width: 200px;">
+    <p>Altura: 2.1m</p>
+    <p>Peso: 460.0kg</p>
+    <p>Tipo: Normal</p>
+    <p>Descrição: Snorlax é um Pokémon preguiçoso que dorme a maior parte do dia. Ele pode devorar grandes quantidades de comida em um instante.</p>
+</div>
+
+<div id="articuno" class="pokemon-info">
+    <h2>144# Articuno</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/144.png" alt="Articuno" style="max-width: 200px;">
+    <p>Altura: 1.7m</p>
+    <p>Peso: 55.4kg</p>
+    <p>Tipo: Gelo/Voador</p>
+    <p>Descrição: Articuno é um Pokémon lendário que pode controlar o gelo. Diz-se que ele aparece para aqueles em perigo.</p>
+</div>
+
+<div id="zapdos" class="pokemon-info">
+    <h2>145# Zapdos</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/145.png" alt="Zapdos" style="max-width: 200px;">
+    <p>Altura: 1.6m</p>
+    <p>Peso: 52.6kg</p>
+    <p>Tipo: Elétrico/Voador</p>
+    <p>Descrição: Zapdos é um Pokémon lendário que controla os raios. Ele é dito voar ao redor do céu em busca de tempestades.</p>
+</div>
+
+<div id="moltres" class="pokemon-info">
+    <h2>146# Moltres</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/146.png" alt="Moltres" style="max-width: 200px;">
+    <p>Altura: 2.0m</p>
+    <p>Peso: 60.0kg</p>
+    <p>Tipo: Fogo/Voador</p>
+    <p>Descrição: Moltres é um Pokémon lendário que controla o fogo. Ele é dito viver dentro de vulcões ativos.</p>
+</div>
+<div id="dratini" class="pokemon-info">
+    <h2>147# Dratini</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/147.png" alt="Dratini" style="max-width: 200px;">
+    <p>Altura: 1.8m</p>
+    <p>Peso: 3.3kg</p>
+    <p>Tipo: Dragão</p>
+    <p>Descrição: Dratini é um Pokémon serpente que vive em águas limpas. Sua pele é fina e sensível, o que o torna vulnerável à luz solar intensa.</p>
+</div>
+
+<div id="dragonair" class="pokemon-info">
+    <h2>148# Dragonair</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/148.png" alt="Dragonair" style="max-width: 200px;">
+    <p>Altura: 4.0m</p>
+    <p>Peso: 16.5kg</p>
+    <p>Tipo: Dragão</p>
+    <p>Descrição: Dragonair é um Pokémon misterioso que vive em lagos profundos. Diz-se que ele possui poderes mágicos que podem controlar o clima.</p>
+</div>
+
+<div id="dragonite" class="pokemon-info">
+    <h2>149# Dragonite</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png" alt="Dragonite" style="max-width: 200px;">
+    <p>Altura: 2.2m</p>
+    <p>Peso: 210.0kg</p>
+    <p>Tipo: Dragão/Voador</p>
+    <p>Descrição: Dragonite é um Pokémon poderoso que voa pelos céus em altas velocidades. Diz-se que ele é extremamente gentil e socorre aqueles em perigo.</p>
+</div>
+
+<div id="mewtwo" class="pokemon-info">
+    <h2>#150 Mewtwo</h2>
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png" alt="Mewtwo" style="max-width: 200px;">
+    <p>Altura: 2.0m</p>
+    <p>Peso: 122.0kg</p>
+    <p>Tipo: Psíquico</p>
+    <p>Descrição: Mewtwo é um Pokémon criado pela clonagem do DNA de Mew. Diz-se que ele possui o maior poder psíquico de todos os Pokémon.</p>
+</div>    
+        <div id="mew" class="pokemon-info">
+            <h2>151# Mew</h2>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/151.png" alt="Mew" style="max-width: 200px;">
+            <p>Altura: 0.4m</p>
+            <p>Peso: 4.0kg</p>
+            <p>Tipo: Psíquico</p>
+            <p>Descrição: Mew é dito ser o Pokémon mais raro de todos. Ele é tão raro que muitos acreditam que ele seja apenas uma lenda.</p>
+        </div>
+    </div>
+</div>
+<div class="credits">
+		<h2>Créditos:</h2>
+        <h2>Karlos Yury<a href="https://github.com/karlosyurydev"><img src="github.jpg" alt="LinkedIn" class="linkedin-logo"></a> <a href="https://www.linkedin.com/in/karlosyurydev/"><img src="linkedin_logo.png" alt="LinkedIn" class="linkedin-logo"></a></h2>
+		<h2>Rafael Campello <a href="https://github.com/rafaelcampello"><img src="github.jpg" alt="LinkedIn" class="linkedin-logo"></a> <a href="https://www.linkedin.com/in/rafaelbcampelloeng/"><img src="linkedin_logo.png" alt="LinkedIn" class="linkedin-logo"></a></h2>
+		<h2>Pokédex v2.4 - 2024</h2>
+		<h2>BUGS CONHECIDOS: Ao buscar MEW, aparece o MEWTWO.</h2>
+   </div>
+
+</div>
+
+<script>
+// Função para simular o clique no Bulbasaur ao carregar a página
+function loadDefaultPokemon() {
+    // Simula um clique no link do Bulbasaur
+    document.querySelector('.pokemon-list-item a[href="#bulbasaur"]').click();
+}
+
+// Executa a função loadDefaultPokemon() quando a página termina de carregar
+window.onload = loadDefaultPokemon;
+
+const pokemonInfo = document.querySelectorAll('.pokemon-info');
+let currentPokemonIndex = Array.from(pokemonInfo).findIndex(info => info.id === "bulbasaur");
+
+function showPokemon(index) {
+    pokemonInfo.forEach(info => {
+        info.classList.remove('active');
+    });
+    pokemonInfo[index].classList.add('active');
+}
+
+function showPreviousPokemon() {
+    currentPokemonIndex = (currentPokemonIndex - 1 + pokemonInfo.length) % pokemonInfo.length;
+    showPokemon(currentPokemonIndex);
+}
+
+function showNextPokemon() {
+    currentPokemonIndex = (currentPokemonIndex + 1) % pokemonInfo.length;
+    showPokemon(currentPokemonIndex);
+}
+
+document.querySelectorAll('.pokemon-list-item a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const targetPokemon = document.getElementById(targetId);
+        if (targetPokemon) {
+            pokemonInfo.forEach(info => {
+                info.classList.remove('active');
+            });
+            targetPokemon.classList.add('active');
+            currentPokemonIndex = Array.from(pokemonInfo).indexOf(targetPokemon);
+        }
+    });
+});
+
+document.getElementById('search').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        const searchTerm = this.value.trim().toLowerCase();
+        const foundIndex = Array.from(pokemonInfo).findIndex(info =>
+            info.querySelector('h2').textContent.toLowerCase().includes(searchTerm)
+        );
+        if (foundIndex !== -1) {
+            showPokemon(foundIndex);
+        } else {
+            alert('Pokémon não encontrado!');
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>
