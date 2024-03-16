@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <!-- Isso é um comentário em HTML e não será exibido na página -->
-<!-- Pokédex by Yury e Rafael. versão 2.4 2024 -->
-<!-- BUGS CONHECIDOS: Ao buscar MEW, aparece o MEWTWO. -->
+<!-- Pokédex by Yury e Rafael. versão 2.5 2024 -->
+<!-- BUGS CONHECIDOS: -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pokédex</title>
+<title>Pokédex 2.5</title>
 <style>
 	.github-logo, .linkedin-logo {
     width: 50px; /* Define a largura desejada */
@@ -127,13 +127,14 @@
     .pokemon-buttons button:hover {
         background-color: #45a049;
     }
+	
 </style>
 </head>
 <body>
 <div class="pokedex">
     <div class="pokedex-sidebar">
-        <h2>Pokédex</h2>
-		<h2>Pokémon registrados</h2>
+        <h2>Pokédex 2.5</h2>
+		<h2>Lista de Pokémon</h2>
         <form class="search-form">
             <input type="text" id="search" placeholder="Pesquisar Pokémon...">
         </form>
@@ -1651,7 +1652,7 @@
     <h2>Créditos:</h2>
     <h2>Karlos Yury <a href="https://github.com/karlosyurydev" target="_blank"><img src="github.jpg" alt="GitHub" class="github-logo" style="width: 25px; height: 25px; object-fit: contain;"></a><a href="https://www.linkedin.com/in/karlosyurydev/" target="_blank"><img src="linkedin_logo.png" alt="LinkedIn" class="linkedin-logo"></a></h2>
     <h2>Rafael Campello <a href="https://github.com/rafaelcampello" target="_blank"><img src="github.jpg" alt="LinkedIn" class="linkedin-logo" style="width: 25px; height: 25px; object-fit: contain;"> </a> <a href="https://www.linkedin.com/in/rafaelbcampelloeng/" target="_blank"><img src="linkedin_logo.png" alt="LinkedIn" class="linkedin-logo"></a></h2>
-    <h2>Pokédex v2.4 - 2024</h2>
+    <h2>Pokédex v2.5 - Março 2024</h2>
 </div>
 
 </div>
@@ -1685,36 +1686,51 @@ function showNextPokemon() {
     currentPokemonIndex = (currentPokemonIndex + 1) % pokemonInfo.length;
     showPokemon(currentPokemonIndex);
 }
-
+// Este trecho de código adiciona um ouvinte de eventos de clique a todos os links dentro dos itens da lista de Pokémon.
 document.querySelectorAll('.pokemon-list-item a').forEach(link => {
+    // Adiciona um evento de clique a cada link
     link.addEventListener('click', function(e) {
+        // Impede o comportamento padrão do link de ocorrer (neste caso, seguir o link)
         e.preventDefault();
+        // Obtém o ID do Pokémon alvo a partir do atributo href do link, removendo o '#' inicial
         const targetId = this.getAttribute('href').substring(1);
+        // Obtém o elemento do Pokémon alvo com base no ID
         const targetPokemon = document.getElementById(targetId);
+        // Se o Pokémon alvo existir
         if (targetPokemon) {
+            // Remove a classe 'active' de todos os elementos de informação do Pokémon
             pokemonInfo.forEach(info => {
                 info.classList.remove('active');
             });
+            // Adiciona a classe 'active' ao elemento do Pokémon alvo para exibi-lo
             targetPokemon.classList.add('active');
+            // Atualiza o índice do Pokémon atual para o índice do Pokémon alvo na lista
             currentPokemonIndex = Array.from(pokemonInfo).indexOf(targetPokemon);
         }
     });
 });
 
-document.getElementById('search').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        e.preventDefault();
-        const searchTerm = this.value.trim().toLowerCase();
-        const foundIndex = Array.from(pokemonInfo).findIndex(info =>
-            info.querySelector('h2').textContent.toLowerCase().includes(searchTerm)
-        );
-        if (foundIndex !== -1) {
-            showPokemon(foundIndex);
+// Adiciona um ouvinte de eventos de pressionamento de tecla ao campo de pesquisa de Pokémon.
+document.getElementById('search').addEventListener('input', function() {
+    // Obtém o termo de pesquisa do campo de entrada, removendo espaços em branco iniciais e finais e convertendo para minúsculas
+    const searchTerm = this.value.trim().toLowerCase();
+
+    // Filtra os links dos Pokémon na lista com base nas primeiras letras do termo de pesquisa
+    document.querySelectorAll('.pokemon-list-item a').forEach(link => {
+        // Obtém o nome do Pokémon associado ao link, removendo o número e convertendo para minúsculas
+        const pokemonName = link.textContent.split('#')[1].trim().toLowerCase();
+        // Verifica se o nome do Pokémon começa com o termo de pesquisa
+        if (pokemonName.startsWith(searchTerm)) {
+            // Exibe o link do Pokémon
+            link.parentNode.style.display = 'block';
         } else {
-            alert('Pokémon não encontrado!');
+            // Oculta o link do Pokémon se não corresponder ao termo de pesquisa
+            link.parentNode.style.display = 'none';
         }
-    }
+    });
 });
+
+
 
 </script>
 
