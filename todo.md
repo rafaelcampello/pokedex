@@ -1,4 +1,4 @@
-# Melhorias da Pokédex 2.8
+# Melhorias da Pokédex 2.9
 
 Atualizado em 21/11/2026.
 
@@ -12,11 +12,13 @@ Atualizado em 21/11/2026.
 - [x] Incluir a segunda geração (#152 a #251), documentar as fontes e corrigir a vírgula nos créditos de Karlos Yury.
 - [x] Incluir as 1.025 espécies e as 326 variedades alternativas registradas no endpoint `/pokemon` da PokéAPI.
 - [x] Centralizar o catálogo em `catalogo.js` e carregar apenas a ilustração da ficha ou variedade selecionada.
+- [x] Adicionar as 1.347 versões Shiny com imagem na PokéAPI e as descrições específicas disponíveis.
+- [x] Sincronizar o seletor com o clique na imagem e permitir a navegação circular.
 
 ## Verificações pendentes
 
 - [ ] Conferir o anúncio da ficha com um leitor de tela dedicado.
-- [ ] Após a publicação da versão 2.8, compartilhar a URL de produção no WhatsApp para conferir a nova prévia.
+- [ ] Após a publicação da versão 2.9, compartilhar a URL de produção no WhatsApp para conferir a nova prévia.
 
 ## Prioridade média
 

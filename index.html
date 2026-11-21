@@ -6,19 +6,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pokédex 2.8</title>
+<title>Pokédex 2.9</title>
 <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
 <meta name="description" content="Explore os 1.025 espécies das nove gerações em uma Pokédex interativa em português.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="Pokédex 2.8">
+<meta property="og:title" content="Pokédex 2.9">
 <meta property="og:description" content="Explore os 1.025 espécies das nove gerações em uma Pokédex interativa em português.">
 <meta property="og:url" content="https://brave-wave-0a4b22810.5.azurestaticapps.net/">
-<meta property="og:image" content="https://brave-wave-0a4b22810.5.azurestaticapps.net/preview-2.8.jpg">
+<meta property="og:image" content="https://brave-wave-0a4b22810.5.azurestaticapps.net/preview-2.9.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Pokédex 2.8, os 1.025 espécies das nove gerações, com uma ilustração de uma Pokédex vermelha.">
+<meta property="og:image:alt" content="Pokédex 2.9, os 1.025 espécies das nove gerações, com uma ilustração de uma Pokédex vermelha.">
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -150,11 +150,33 @@
 	
     .pokemon-info img {
         width: 200px;
+        height: auto;
         aspect-ratio: 1;
         object-fit: contain;
     }
     .pokemon-info img[hidden] {
         display: none;
+    }
+    .pokemon-image-button {
+        display: grid;
+        place-items: center;
+        width: min(200px, 100%);
+        aspect-ratio: 1;
+        margin: 8px auto 0;
+        padding: 0;
+        border: 0;
+        border-radius: 4px;
+        background: transparent;
+        color: inherit;
+        font: inherit;
+        cursor: pointer;
+    }
+    .pokemon-image-button:disabled {
+        cursor: default;
+    }
+    .pokemon-image-hint {
+        text-align: center;
+        font-size: 0.875rem;
     }
     #pokemon-variety {
         max-width: 100%;
@@ -207,7 +229,7 @@
 <body>
 <div class="pokedex">
     <div class="pokedex-sidebar">
-        <h1>Pokédex 2.8</h1>
+        <h1>Pokédex 2.9</h1>
 		<h2>Lista de Pokémon</h2>
         <form class="search-form">
             <label for="search">Pesquisar Pokémon</label>
@@ -227,8 +249,11 @@
             <label id="variety-label" hidden>Variedade
                 <select id="pokemon-variety"></select>
             </label>
-            <img id="pokemon-image" width="200" height="200" alt="" hidden>
-            <p id="image-status" hidden>Imagem indisponível.</p>
+            <button type="button" id="next-variety" class="pokemon-image-button" aria-label="Ver a próxima versão" aria-describedby="image-hint">
+                <img id="pokemon-image" width="200" height="200" alt="" hidden>
+                <span id="image-status" hidden>Imagem indisponível.</span>
+            </button>
+            <p id="image-hint" class="pokemon-image-hint">Clique na imagem para ver a próxima versão.</p>
             <p>Geração: <span id="pokemon-generation"></span></p>
             <p>Altura: <span id="pokemon-height"></span></p>
             <p>Peso: <span id="pokemon-weight"></span></p>
@@ -256,16 +281,19 @@
             <a href="https://www.rafaelbcampello.com/"><img src="rafael-favicon.svg" alt="Portfólio profissional de Rafael Campello"></a>
         </span>
     </p>
-    <p>Pokédex v2.8 — <time datetime="2026-11-21">21/11/2026</time></p>
+    <p>Pokédex v2.9 — <time datetime="2026-11-21">21/11/2026</time></p>
 </footer>
 
 <script src="catalogo.js"></script>
+<script src="variedades.js"></script>
 <script>
 const list = document.querySelector('.pokemon-list');
 const card = document.getElementById('pokemon-card');
 const title = document.getElementById('pokemon-name');
 const image = document.getElementById('pokemon-image');
 const imageStatus = document.getElementById('image-status');
+const nextVariety = document.getElementById('next-variety');
+const imageHint = document.getElementById('image-hint');
 const variety = document.getElementById('pokemon-variety');
 const varietyLabel = document.getElementById('variety-label');
 const generation = document.getElementById('pokemon-generation');
@@ -278,6 +306,7 @@ const searchStatus = document.getElementById('search-status');
 const sprites = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon';
 const formatMeasure = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 1 });
 let currentIndex = 0;
+let versions = [];
 
 function normalizeName(value) {
     return value.normalize('NFD').replace(/\p{M}/gu, '').toLowerCase();
@@ -313,40 +342,67 @@ image.addEventListener('error', () => {
     }
 });
 
-function showVariety() {
-    const [, , name, , , varieties] = pokemonCatalog[currentIndex];
-    const [id, label, dm, hg, types] = varieties[variety.selectedIndex];
+function showVariety(announce = true) {
+    const [number, , name, , text] = pokemonCatalog[currentIndex];
+    const { data: [id, , dm, hg, types], label, artwork, fallback } = versions[variety.selectedIndex];
     height.textContent = formatMeasure.format(dm / 10) + ' m';
     weight.textContent = formatMeasure.format(hg / 10) + ' kg';
     type.textContent = types;
-    image.alt = variety.selectedIndex === 0 ? name : name + ' — ' + label;
-    imageStatus.hidden = true;
-    const artwork = sprites + '/other/official-artwork/' + id + '.png';
-    if (image.getAttribute('src') !== artwork || !image.complete || !image.naturalWidth) {
+    const [flavorText, language] = formDescriptions[id] ?? [text, number <= 251 ? 'pt-BR' : 'en'];
+    description.textContent = flavorText;
+    description.lang = language;
+    image.alt = name + ' — ' + label;
+
+    const source = sprites + '/' + artwork;
+    if (image.src !== source || !image.complete || !image.naturalWidth) {
         image.hidden = true;
-        image.dataset.fallback = sprites + '/' + id + '.png';
-        image.src = artwork;
+        imageStatus.hidden = true;
+        delete image.dataset.fallback;
+        if (fallback && fallback !== artwork) image.dataset.fallback = sprites + '/' + fallback;
+        image.src = source;
     }
+
+    if (announce) selectedStatus.textContent = title.textContent + ' — ' + label;
 }
 
 function showPokemon(index, announce = true) {
     entries[currentIndex].link.removeAttribute('aria-current');
     currentIndex = index;
-    const [, identifier, , gen, text, varieties] = pokemonCatalog[index];
+    const [, identifier, , gen, , varieties] = pokemonCatalog[index];
     const link = entries[index].link;
     link.setAttribute('aria-current', 'true');
     card.id = identifier;
     title.textContent = link.textContent;
     generation.textContent = gen;
-    description.textContent = text;
-    description.lang = entries[index].number <= 251 ? 'pt-BR' : 'en';
-    variety.replaceChildren(...varieties.map(([id, label]) => new Option(label, id)));
-    varietyLabel.hidden = varieties.length < 2;
-    showVariety();
-    if (announce) selectedStatus.textContent = 'Ficha selecionada: ' + title.textContent;
+
+    versions = varieties.flatMap(data => {
+        const [id, label] = data;
+        const file = id + '.png';
+        const regular = { data, label, key: String(id), artwork: 'other/official-artwork/' + file, fallback: file };
+        const shiny = shinyOverrides[id];
+        if (shiny === null) return [regular];
+        return [regular, {
+            data,
+            label: label + ' — Shiny',
+            key: id + '-shiny',
+            artwork: shiny ?? 'other/official-artwork/shiny/' + file,
+            fallback: 'shiny/' + file
+        }];
+    });
+
+    variety.replaceChildren(...versions.map(({label, key}) => new Option(label, key)));
+    const canCycle = versions.length > 1;
+    varietyLabel.hidden = !canCycle;
+    nextVariety.disabled = !canCycle;
+    imageHint.hidden = !canCycle;
+    showVariety(announce);
 }
 
-variety.addEventListener('change', showVariety);
+variety.addEventListener('change', () => showVariety());
+nextVariety.addEventListener('click', () => {
+    variety.selectedIndex = (variety.selectedIndex + 1) % versions.length;
+    showVariety();
+});
 document.getElementById('previous-pokemon').addEventListener('click', () => {
     showPokemon((currentIndex - 1 + entries.length) % entries.length);
 });
