@@ -1,14 +1,15 @@
-# Pokédex 2.7
+# Pokédex 2.8
 
 Atualizada em 21/11/2026. [Abrir a Pokédex](https://brave-wave-0a4b22810.5.azurestaticapps.net/)
 
-Pokédex interativa em português com os 251 Pokémon das duas primeiras gerações, de Bulbasaur a Celebi. Cada ficha exibe número, nome, imagem, tipo, altura, peso e uma breve descrição.
+Pokédex interativa em português com as 1.025 espécies das nove gerações, de Bulbasaur (#001) a Pecharunt (#1025). Cada ficha exibe número, nome, imagem, tipo, altura, peso e uma breve descrição.
 
 ## Como usar
 
 - Digite parte do nome (como `pika` ou `chu`) ou o número do Pokémon (como `25` ou `025`) para filtrar a lista lateral.
 - Clique em um Pokémon da lista para abrir sua ficha. A página começa com Bulbasaur selecionado.
-- Use **Anterior** e **Próximo** para percorrer o catálogo completo, mesmo com a lista filtrada. A navegação retorna ao início depois de Celebi.
+- Quando houver mais de uma variedade, use o seletor na ficha para trocar a imagem, os tipos, a altura e o peso. A descrição é da espécie.
+- Use **Anterior** e **Próximo** para percorrer o catálogo completo, mesmo com a lista filtrada. A navegação retorna ao início depois de Pecharunt.
 
 ## Como rodar localmente
 
@@ -23,15 +24,18 @@ Abra o arquivo `index.html` no navegador. O projeto usa HTML, CSS e JavaScript p
 
 ## Fontes do catálogo
 
-Os dados e textos dos Pokémon #001 a #151 estão gravados no HTML original do projeto, que não identifica sua fonte. As fichas #152 a #251 usam nomes, tipos atuais, altura e peso dos dados da [PokéAPI](https://github.com/PokeAPI/pokeapi/tree/master/data/v2/csv). As descrições em português foram adaptadas das entradas em inglês de Pokémon Silver disponíveis na mesma fonte. As ilustrações das duas gerações vêm da coleção de arte oficial do [repositório de sprites da PokéAPI](https://github.com/PokeAPI/sprites/tree/master/sprites/pokemon/other/official-artwork).
+O catálogo reúne 1.025 espécies e todos os 1.351 registros do endpoint `/pokemon` da PokéAPI, incluindo 326 variedades alternativas. A numeração e a busca seguem a Pokédex Nacional. Variações cosméticas disponíveis apenas no endpoint `/pokemon-form` ficam fora do catálogo.
+
+Os dados foram incorporados a partir dos [arquivos CSV da PokéAPI](https://github.com/PokeAPI/pokeapi/tree/cd5f6c6232f23430aa6089896d96230f5f7ecef4/data/v2/csv). As descrições #001 a #251 mantêm os textos em português das versões anteriores. Para as demais, a ficha usa a descrição em inglês disponibilizada pela PokéAPI. O site busca a arte oficial sob demanda e tenta o sprite da mesma variedade quando a arte está indisponível. [Coleção de imagens](https://github.com/PokeAPI/sprites)
 
 ## Estrutura do projeto
 
 | Arquivo ou pasta | Conteúdo |
 | --- | --- |
-| `index.html` | Interface, estilos, fichas do catálogo e lógica de pesquisa e navegação |
+| `index.html` | Interface, estilos e lógica de pesquisa e navegação |
+| `catalogo.js` | Dados locais das espécies e variedades |
 | `favicon.png` | Favicon da Pokédex |
-| `preview-2.7.jpg` | Imagem Open Graph para compartilhamento |
+| `preview-2.8.jpg` | Imagem Open Graph para compartilhamento |
 | `karlos-favicon.svg` e `rafael-favicon.svg` | Favicons dos portfólios nos créditos |
 | `github.jpg` e `linkedin_logo.png` | Ícones da seção de créditos |
 | `.github/workflows/` | Workflow do GitHub Actions para publicação no Azure Static Web Apps |
