@@ -6,20 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pokédex 3.0</title>
+<title>Pokédex 3.1</title>
 <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
-<meta name="description" content="Explore 1.025 espécies e 1.347 versões Shiny. Alterne entre as formas pelo menu ou clicando na imagem.">
+<meta name="description" content="Explore 1.025 espécies e 1.347 versões Shiny em português, inglês, espanhol e polonês.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="Pokédex 3.0">
-<meta property="og:description" content="Explore 1.025 espécies e 1.347 versões Shiny. Alterne entre as formas pelo menu ou clicando na imagem.">
+<meta property="og:title" content="Pokédex 3.1">
+<meta property="og:description" content="Explore 1.025 espécies e 1.347 versões Shiny em português, inglês, espanhol e polonês.">
 <link rel="canonical" href="https://brave-wave-0a4b22810.5.azurestaticapps.net/">
-<meta property="og:url" content="https://brave-wave-0a4b22810.5.azurestaticapps.net/?v=3.0">
-<meta property="og:image" content="https://brave-wave-0a4b22810.5.azurestaticapps.net/preview-3.0.jpg">
+<meta property="og:url" content="https://brave-wave-0a4b22810.5.azurestaticapps.net/?v=3.1">
+<meta property="og:image" content="https://brave-wave-0a4b22810.5.azurestaticapps.net/preview-3.1.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Pokédex 3.0, 1.025 espécies e 1.347 versões Shiny, com uma ilustração de uma Pokédex vermelha.">
+<meta property="og:image:alt" content="Pokédex 3.1, 1.025 espécies em quatro idiomas, com uma ilustração de uma Pokédex vermelha.">
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -225,21 +225,52 @@
         }
     }
     .pokedex-main { min-width: 0; }
+    .languages {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .languages button {
+        display: grid;
+        place-items: center;
+        min-width: 44px;
+        min-height: 36px;
+        border: 2px solid transparent;
+        border-radius: 5px;
+        background: #fff;
+        cursor: pointer;
+    }
+    .languages button[aria-pressed="true"] {
+        border-color: #172d44;
+        box-shadow: 0 0 0 2px #fff;
+    }
+    .languages svg {
+        display: block;
+        width: 30px;
+        height: 20px;
+    }
 </style>
 </head>
 <body>
 <div class="pokedex">
     <div class="pokedex-sidebar">
-        <h1>Pokédex 3.0</h1>
-		<h2>Lista de Pokémon</h2>
+        <div class="languages" role="group" aria-label="Idioma" data-i18n-aria="language">
+            <button type="button" data-locale="pt-BR" lang="pt-BR" aria-label="Português do Brasil" title="Português do Brasil" aria-pressed="true"><svg viewBox="0 0 30 20" aria-hidden="true" focusable="false"><path fill="#009b3a" d="M0 0h30v20H0z"/><path fill="#ffdf00" d="m15 2 12 8-12 8-12-8z"/><circle fill="#002776" cx="15" cy="10" r="4.5"/><path d="M11 8.5c3-.6 6 .1 8 2" fill="none" stroke="#fff"/></svg></button>
+            <button type="button" data-locale="en" lang="en" aria-label="English" title="English" aria-pressed="false"><svg viewBox="0 0 30 20" aria-hidden="true" focusable="false"><path fill="#012169" d="M0 0h30v20H0z"/><path d="m0 0 30 20M30 0 0 20" stroke="#fff" stroke-width="4"/><path d="m0 0 30 20M30 0 0 20" stroke="#c8102e" stroke-width="1.5"/><path d="M15 0v20M0 10h30" stroke="#fff" stroke-width="7"/><path d="M15 0v20M0 10h30" stroke="#c8102e" stroke-width="4"/></svg></button>
+            <button type="button" data-locale="es" lang="es" aria-label="Español" title="Español" aria-pressed="false"><svg viewBox="0 0 30 20" aria-hidden="true" focusable="false"><path fill="#aa151b" d="M0 0h30v20H0z"/><path fill="#f1bf00" d="M0 5h30v10H0z"/><path fill="#aa151b" d="M7 8h4v4l-2 1-2-1z"/><path fill="#aa151b" d="M7 6.5h4v1H7z"/></svg></button>
+            <button type="button" data-locale="pl" lang="pl" aria-label="Polski" title="Polski" aria-pressed="false"><svg viewBox="0 0 30 20" aria-hidden="true" focusable="false"><path fill="#fff" d="M0 0h30v10H0z"/><path fill="#dc143c" d="M0 10h30v10H0z"/></svg></button>
+        </div>
+        <p id="language-status" class="visually-hidden" role="status"></p>
+        <h1>Pokédex 3.1</h1>
+		<h2 data-i18n="list">Lista de Pokémon</h2>
         <form class="search-form">
-            <label for="search">Pesquisar Pokémon</label>
-            <input type="search" id="search" placeholder="Nome ou número">
+            <label for="search" data-i18n="search">Pesquisar Pokémon</label>
+            <input type="search" id="search" placeholder="Nome ou número" data-i18n-placeholder="placeholder">
         </form>
         <p id="search-status" role="status"></p>
         <div class="pokemon-buttons">
-            <button type="button" id="previous-pokemon">Anterior</button>
-            <button type="button" id="next-pokemon">Próximo</button>
+            <button type="button" id="previous-pokemon" data-i18n="previous">Anterior</button>
+            <button type="button" id="next-pokemon" data-i18n="next">Próximo</button>
         </div>
         <ul class="pokemon-list"></ul>
     </div>
@@ -247,44 +278,47 @@
         <p id="selected-pokemon" class="visually-hidden" role="status"></p>
         <div class="pokemon-info" id="pokemon-card">
             <h2 id="pokemon-name"></h2>
-            <label id="variety-label" hidden>Variedade
+            <label id="variety-label" hidden><span data-i18n="variety">Variedade</span>
                 <select id="pokemon-variety"></select>
             </label>
-            <button type="button" id="next-variety" class="pokemon-image-button" aria-label="Ver a próxima versão" aria-describedby="image-hint">
+            <button type="button" id="next-variety" class="pokemon-image-button" aria-label="Ver a próxima versão" data-i18n-aria="nextVariant" aria-describedby="image-hint">
                 <img id="pokemon-image" width="200" height="200" alt="" hidden>
-                <span id="image-status" hidden>Imagem indisponível.</span>
+                <span id="image-status" hidden data-i18n="unavailable">Imagem indisponível.</span>
             </button>
-            <p id="image-hint" class="pokemon-image-hint">Clique na imagem para ver a próxima versão.</p>
-            <p>Geração: <span id="pokemon-generation"></span></p>
-            <p>Altura: <span id="pokemon-height"></span></p>
-            <p>Peso: <span id="pokemon-weight"></span></p>
-            <p>Tipo: <span id="pokemon-type"></span></p>
-            <p>Descrição: <span id="pokemon-description"></span></p>
+            <p id="image-hint" class="pokemon-image-hint" data-i18n="hint">Clique na imagem para ver a próxima versão.</p>
+            <p><span data-i18n="generation">Geração</span>: <span id="pokemon-generation"></span></p>
+            <p><span data-i18n="height">Altura</span>: <span id="pokemon-height"></span></p>
+            <p><span data-i18n="weight">Peso</span>: <span id="pokemon-weight"></span></p>
+            <p><span data-i18n="type">Tipo</span>: <span id="pokemon-type"></span></p>
+            <p><span data-i18n="description">Descrição</span>: <span id="pokemon-description"></span></p>
         </div>
-        <noscript>Ative o JavaScript para consultar o catálogo.</noscript>
+        <noscript data-i18n="scripts">Ative o JavaScript para consultar o catálogo.</noscript>
     </main>
 </div>
 <footer class="credits">
-    <h2>Créditos</h2>
+    <h2 data-i18n="credits">Créditos</h2>
     <p class="credit">
-        <span><strong>Karlos Yury</strong> (PxG Server Gold, Char: Malefic Luna level 430+, clã Malefic)</span>
+        <span><strong>Karlos Yury</strong> (<span data-i18n="server">Servidor Gold do PxG</span>, <span data-i18n="character">Personagem</span>: Malefic Luna, <span data-i18n="level">nível</span> 430+, <span data-i18n="clan">clã</span> Malefic)</span>
         <span class="credit-links">
-            <a href="https://github.com/karlosyurydev"><img src="github.jpg" alt="GitHub de Karlos Yury"></a>
-            <a href="https://www.linkedin.com/in/karlosyurydev/"><img src="linkedin_logo.png" alt="LinkedIn de Karlos Yury"></a>
-            <a href="https://www.karlosyury.com/"><img src="karlos-favicon.svg" alt="Portfólio profissional de Karlos Yury"></a>
+            <a href="https://github.com/karlosyurydev"><img src="github.jpg" alt="GitHub de Karlos Yury" data-i18n-alt="social" data-person="Karlos Yury" data-site="GitHub"></a>
+            <a href="https://www.linkedin.com/in/karlosyurydev/"><img src="linkedin_logo.png" alt="LinkedIn de Karlos Yury" data-i18n-alt="social" data-person="Karlos Yury" data-site="LinkedIn"></a>
+            <a href="https://www.karlosyury.com/"><img src="karlos-favicon.svg" alt="Portfólio profissional de Karlos Yury" data-i18n-alt="portfolio" data-person="Karlos Yury"></a>
         </span>
     </p>
     <p class="credit">
-        <span><strong>Rafael Campello</strong> (PxG Server Gold, Char: Voextor level 490+, clã Raibolt)</span>
+        <span><strong>Rafael Campello</strong> (<span data-i18n="server">Servidor Gold do PxG</span>, <span data-i18n="character">Personagem</span>: Voextor, <span data-i18n="level">nível</span> 490+, <span data-i18n="clan">clã</span> Raibolt)</span>
         <span class="credit-links">
-            <a href="https://github.com/rafaelcampello"><img src="github.jpg" alt="GitHub de Rafael Campello"></a>
-            <a href="https://www.linkedin.com/in/rafaelbcampelloeng/"><img src="linkedin_logo.png" alt="LinkedIn de Rafael Campello"></a>
-            <a href="https://www.rafaelbcampello.com/"><img src="rafael-favicon.svg" alt="Portfólio profissional de Rafael Campello"></a>
+            <a href="https://github.com/rafaelcampello"><img src="github.jpg" alt="GitHub de Rafael Campello" data-i18n-alt="social" data-person="Rafael Campello" data-site="GitHub"></a>
+            <a href="https://www.linkedin.com/in/rafaelbcampelloeng/"><img src="linkedin_logo.png" alt="LinkedIn de Rafael Campello" data-i18n-alt="social" data-person="Rafael Campello" data-site="LinkedIn"></a>
+            <a href="https://www.rafaelbcampello.com/"><img src="rafael-favicon.svg" alt="Portfólio profissional de Rafael Campello" data-i18n-alt="portfolio" data-person="Rafael Campello"></a>
         </span>
     </p>
-    <p>Pokédex v3.0 — <time datetime="2026-11-21">21/11/2026</time></p>
+    <p>Pokédex v3.1 — <time datetime="2026-11-21">21/11/2026</time></p>
 </footer>
 
+<script src="vendor/i18next.min.js"></script>
+<script src="i18n.js"></script>
+<script src="nomes-formas.js"></script>
 <script src="catalogo.js"></script>
 <script src="variedades.js"></script>
 <script>
@@ -305,7 +339,8 @@ const description = document.getElementById('pokemon-description');
 const selectedStatus = document.getElementById('selected-pokemon');
 const searchStatus = document.getElementById('search-status');
 const sprites = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon';
-const formatMeasure = new Intl.NumberFormat('pt-BR', { minimumFractionDigits: 1 });
+let formatMeasure;
+let languageRequest = 0;
 let currentIndex = 0;
 let versions = [];
 
@@ -344,14 +379,14 @@ image.addEventListener('error', () => {
 });
 
 function showVariety(announce = true) {
-    const [number, , name, , text] = pokemonCatalog[currentIndex];
+    const [number, , name] = pokemonCatalog[currentIndex];
     const { data: [id, , dm, hg, types], label, artwork, fallback } = versions[variety.selectedIndex];
     height.textContent = formatMeasure.format(dm / 10) + ' m';
     weight.textContent = formatMeasure.format(hg / 10) + ' kg';
-    type.textContent = types;
-    const [flavorText, language] = formDescriptions[id] ?? [text, number <= 251 ? 'pt-BR' : 'en'];
-    description.textContent = flavorText;
-    description.lang = language;
+    type.textContent = types.split('/').map(value => i18next.t('types.' + typeIndexes.get(value))).join('/');
+    const localized = pokemonDescriptions[i18next.language];
+    description.textContent = localized.forms[id] ?? localized.species[number];
+    description.lang = i18next.language;
     image.alt = name + ' — ' + label;
 
     const source = sprites + '/' + artwork;
@@ -366,7 +401,8 @@ function showVariety(announce = true) {
     if (announce) selectedStatus.textContent = title.textContent + ' — ' + label;
 }
 
-function showPokemon(index, announce = true) {
+function showPokemon(index, announce = true, selectedVersion = 0) {
+    if (!formatMeasure) return;
     entries[currentIndex].link.removeAttribute('aria-current');
     currentIndex = index;
     const [, identifier, , gen, , varieties] = pokemonCatalog[index];
@@ -377,7 +413,9 @@ function showPokemon(index, announce = true) {
     generation.textContent = gen;
 
     versions = varieties.flatMap(data => {
-        const [id, label] = data;
+        const [id, originalLabel] = data;
+        const label = originalLabel === 'Forma padrão' ? i18next.t('defaultForm') :
+            localizedFormNames[i18next.language]?.[id] ?? originalLabel;
         const file = id + '.png';
         const regular = { data, label, key: String(id), artwork: 'other/official-artwork/' + file, fallback: file };
         const shiny = shinyOverrides[id];
@@ -392,6 +430,7 @@ function showPokemon(index, announce = true) {
     });
 
     variety.replaceChildren(...versions.map(({label, key}) => new Option(label, key)));
+    variety.selectedIndex = selectedVersion;
     const canCycle = versions.length > 1;
     varietyLabel.hidden = !canCycle;
     nextVariety.disabled = !canCycle;
@@ -421,9 +460,61 @@ document.getElementById('search').addEventListener('input', event => {
         item.hidden = !visible;
         if (visible) matches++;
     });
-    searchStatus.textContent = term && matches === 0 ? 'Nenhum Pokémon encontrado.' : '';
+    searchStatus.textContent = term && matches === 0 ? i18next.t('empty') : '';
 });
-showPokemon(0, false);
+async function setLanguage(locale) {
+    const request = ++languageRequest;
+    const status = document.getElementById('language-status');
+    try {
+        await loadDescriptions(locale);
+    } catch {
+        if (request === languageRequest) status.textContent = i18next.t('loadError');
+        return;
+    }
+    if (request !== languageRequest) return;
+
+    await i18next.changeLanguage(locale);
+    document.documentElement.lang = locale;
+    formatMeasure = new Intl.NumberFormat(locale, { minimumFractionDigits: 1 });
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+        element.textContent = i18next.t(element.dataset.i18n);
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(element => {
+        element.setAttribute('aria-label', i18next.t(element.dataset.i18nAria));
+    });
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+        element.placeholder = i18next.t(element.dataset.i18nPlaceholder);
+    });
+    document.querySelectorAll('[data-i18n-alt]').forEach(element => {
+        element.alt = i18next.t(element.dataset.i18nAlt, { name: element.dataset.person, site: element.dataset.site });
+    });
+    document.querySelectorAll('[data-locale]').forEach(button => {
+        button.setAttribute('aria-pressed', String(button.dataset.locale === locale));
+    });
+    const date = document.querySelector('time');
+    date.textContent = new Intl.DateTimeFormat(locale, {dateStyle: 'short', timeZone: 'UTC'}).format(new Date(date.dateTime));
+    if (searchStatus.textContent) searchStatus.textContent = i18next.t('empty');
+    showPokemon(currentIndex, false, Math.max(0, variety.selectedIndex));
+    status.textContent = '';
+    saveLocale(locale);
+}
+
+async function start() {
+    await i18next.init({
+        lng: 'pt-BR',
+        supportedLngs: locales,
+        fallbackLng: 'pt-BR',
+        interpolation: { escapeValue: false },
+        resources: Object.fromEntries(locales.map(locale => [locale, { translation: messages[locale] }]))
+    });
+    const locale = preferredLocale();
+    await setLanguage(locale);
+    if (!pokemonDescriptions[i18next.language]) await setLanguage('pt-BR');
+    document.querySelectorAll('[data-locale]').forEach(button => {
+        button.addEventListener('click', () => setLanguage(button.dataset.locale));
+    });
+}
+start();
 </script>
 
 </body>
