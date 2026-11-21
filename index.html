@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <!-- Isso é um comentário em HTML e não será exibido na página -->
-<!-- Pokédex by Yury e Rafael. versão 2.5 2024 -->
+<!-- Pokédex por Karlos Yury e Rafael Campello -->
 <!-- BUGS CONHECIDOS: -->
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pokédex 2.5</title>
+<title>Pokédex 2.6</title>
+<link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
+<meta name="description" content="Explore os 151 Pokémon da primeira geração em uma Pokédex interativa em português.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:title" content="Pokédex 2.6">
+<meta property="og:description" content="Explore os 151 Pokémon da primeira geração em uma Pokédex interativa em português.">
+<meta property="og:url" content="https://brave-wave-0a4b22810.5.azurestaticapps.net/">
+<meta property="og:image" content="https://brave-wave-0a4b22810.5.azurestaticapps.net/preview-2.6.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Pokédex 2.6, os 151 Pokémon da primeira geração, com uma ilustração de uma Pokédex vermelha.">
 <style>
-	.github-logo, .linkedin-logo {
-    width: 50px; /* Define a largura desejada */
-    height: 50px; /* Define a altura desejada */
-    object-fit: contain; /* Garante que a imagem seja contida dentro das dimensões sem distorcer */
-}
     body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
-        background-color: #f0f0f0;
-        background-image: url('pokeball.png');
-        background-repeat: repeat;
+        background-color: #e4edf7;
     }
     .pokedex {
         display: flex;
@@ -96,15 +101,35 @@
     }
     .credits {
         text-align: center;
-        margin-top: 20px;
+        margin: 20px auto;
+        padding: 0 12px;
+        color: #172d44;
     }
     .credits h2 {
-        margin: 0;
+        margin: 0 0 8px;
     }
-    .linkedin-logo {
-        width: 20px;
-        height: auto;
-        margin-left: 5px;
+    .credit, .credit-links {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    .credit-links a {
+        display: grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+    .credit-links a:hover {
+        background-color: #cbdced;
+    }
+    .credit-links img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
     }
     .pokemon-buttons {
         display: flex;
@@ -179,7 +204,7 @@
 <body>
 <div class="pokedex">
     <div class="pokedex-sidebar">
-        <h1>Pokédex 2.5</h1>
+        <h1>Pokédex 2.6</h1>
 		<h2>Lista de Pokémon</h2>
         <form class="search-form">
             <label for="search">Pesquisar Pokémon</label>
@@ -1696,12 +1721,26 @@
         </div>
     </main>
 </div>
-<div class="credits">
-    <h2>Créditos:</h2>
-    <h2>Karlos Yury <a href="https://github.com/karlosyurydev" target="_blank"><img src="github.jpg" alt="GitHub" class="github-logo" style="width: 25px; height: 25px; object-fit: contain;"></a><a href="https://www.linkedin.com/in/karlosyurydev/" target="_blank"><img src="linkedin_logo.png" alt="LinkedIn" class="linkedin-logo"></a></h2>
-    <h2>Rafael Campello <a href="https://github.com/rafaelcampello" target="_blank"><img src="github.jpg" alt="GitHub de Rafael Campello" class="github-logo" style="width: 25px; height: 25px; object-fit: contain;"> </a> <a href="https://www.linkedin.com/in/rafaelbcampelloeng/" target="_blank"><img src="linkedin_logo.png" alt="LinkedIn" class="linkedin-logo"></a></h2>
-    <h2>Pokédex v2.5 - Março 2024</h2>
-</div>
+<footer class="credits">
+    <h2>Créditos</h2>
+    <p class="credit">
+        <span><strong>Karlos Yury</strong> (PxG Server Gold Char: Malefic Luna level 430+, clã Malefic)</span>
+        <span class="credit-links">
+            <a href="https://github.com/karlosyurydev"><img src="github.jpg" alt="GitHub de Karlos Yury"></a>
+            <a href="https://www.linkedin.com/in/karlosyurydev/"><img src="linkedin_logo.png" alt="LinkedIn de Karlos Yury"></a>
+            <a href="https://www.karlosyury.com/"><img src="karlos-favicon.svg" alt="Portfólio profissional de Karlos Yury"></a>
+        </span>
+    </p>
+    <p class="credit">
+        <span><strong>Rafael Campello</strong> (PxG Server Gold, Char: Voextor level 490+, clã Raibolt)</span>
+        <span class="credit-links">
+            <a href="https://github.com/rafaelcampello"><img src="github.jpg" alt="GitHub de Rafael Campello"></a>
+            <a href="https://www.linkedin.com/in/rafaelbcampelloeng/"><img src="linkedin_logo.png" alt="LinkedIn de Rafael Campello"></a>
+            <a href="https://www.rafaelbcampello.com/"><img src="rafael-favicon.svg" alt="Portfólio profissional de Rafael Campello"></a>
+        </span>
+    </p>
+    <p>Pokédex v2.6 — <time datetime="2026-11-21">21/11/2026</time></p>
+</footer>
 
 <script>
 const pokemonInfo = Array.from(document.querySelectorAll('.pokemon-info'));
