@@ -1,4 +1,4 @@
-# Melhorias da Pokédex 3.0
+# Melhorias da Pokédex 3.1
 
 Atualizado em 21/11/2026.
 
@@ -17,10 +17,13 @@ Atualizado em 21/11/2026.
 
 - [x] Versionar a URL e a imagem Open Graph e incluir o catálogo completo e as opções Shiny na prévia.
 
+- [x] Internacionalizar a interface com i18next e quatro bandeiras acima do título.
+- [x] Disponibilizar 1.025 descrições de espécies e 63 descrições de formas em cada idioma.
+
 ## Verificações pendentes
 
 - [ ] Conferir o anúncio da ficha com um leitor de tela dedicado.
-- [ ] Após a publicação da versão 3.0, conferir os metadados e a imagem em produção e testar o link de compartilhamento `?v=3.0` no WhatsApp.
+- [ ] Após a publicação da versão 3.1, conferir os metadados e a imagem em produção e testar o link de compartilhamento `?v=3.1` no WhatsApp.
 
 ## Prioridade média
 
