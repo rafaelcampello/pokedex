@@ -2,7 +2,7 @@
 <!-- Isso é um comentário em HTML e não será exibido na página -->
 <!-- Pokédex by Yury e Rafael. versão 2.5 2024 -->
 <!-- BUGS CONHECIDOS: -->
-<html lang="en">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,12 +30,13 @@
         overflow: hidden;
         background-color: #fff;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        width: 600px;
+        width: min(600px, calc(100% - 24px));
+        box-sizing: border-box;
     }
     .pokedex-sidebar {
         width: 250px;
         padding: 20px;
-        background-color: #f00;
+        background-color: #c00;
         color: #fff;
         overflow-y: auto;
         max-height: 500px;
@@ -62,7 +63,7 @@
         transition: background-color 0.3s ease;
     }
     .pokemon-list-item a:hover {
-        background-color: #f00;
+        background-color: #c00;
     }
     .pokemon-info {
         display: none;
@@ -85,7 +86,7 @@
     .search-form {
         margin-bottom: 20px;
     }
-    .search-form input[type="text"] {
+    .search-form input[type="search"] {
         width: 100%;
         padding: 8px;
         border: 1px solid #ccc;
@@ -114,7 +115,7 @@
         padding: 10px 20px;
         border: none;
         border-radius: 5px;
-        background-color: #4CAF50;
+        background-color: #2E7D32;
         color: white;
         text-align: center;
         text-decoration: none;
@@ -125,26 +126,72 @@
         cursor: pointer;
     }
     .pokemon-buttons button:hover {
-        background-color: #45a049;
+        background-color: #256628;
     }
 	
+    .pokemon-info img {
+        width: 100%;
+    }
+    .search-form label {
+        display: block;
+        margin-bottom: 6px;
+    }
+    .pokedex :focus-visible, .credits :focus-visible {
+        outline: 3px solid #1a1a1a;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 2px #fff;
+    }
+    .pokedex-sidebar {
+        overflow-wrap: anywhere;
+    }
+    .pokemon-buttons {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+        border: 0;
+    }
+    @media (max-width: 600px) {
+        .pokedex {
+            flex-direction: column;
+        }
+        .pokedex-sidebar {
+            width: auto;
+            max-height: none;
+            overflow: visible;
+        }
+        .pokemon-list {
+            max-height: 14rem;
+            overflow-y: auto;
+            padding: 6px;
+        }
+    }
 </style>
 </head>
 <body>
 <div class="pokedex">
     <div class="pokedex-sidebar">
-        <h2>Pokédex 2.5</h2>
+        <h1>Pokédex 2.5</h1>
 		<h2>Lista de Pokémon</h2>
         <form class="search-form">
-            <input type="text" id="search" placeholder="Pesquisar Pokémon...">
+            <label for="search">Pesquisar Pokémon</label>
+            <input type="search" id="search" placeholder="Nome ou número">
         </form>
+        <p id="search-status" role="status"></p>
         <div class="pokemon-buttons">
-            <button onclick="showPreviousPokemon()">Anterior</button>
-            <button onclick="showNextPokemon()">Próximo</button>
+            <button type="button" id="previous-pokemon">Anterior</button>
+            <button type="button" id="next-pokemon">Próximo</button>
         </div>
         <ul class="pokemon-list">
-            <ul class="pokemon-list">
-            <li class="pokemon-list-item"><a href="#bulbasaur">001# Bulbasaur</a></li>
+            <li class="pokemon-list-item"><a href="#bulbasaur" aria-current="true">001# Bulbasaur</a></li>
             <li class="pokemon-list-item"><a href="#ivysaur">002# Ivysaur</a></li>
             <li class="pokemon-list-item"><a href="#venusaur">003# Venusaur</a></li>
             <li class="pokemon-list-item"><a href="#charmander">004# Charmander</a></li>
@@ -297,7 +344,8 @@
     <li class="pokemon-list-item"><a href="#mew">151# Mew</a></li>
         </ul>
     </div>
-    <div class="pokedex-main">
+    <main class="pokedex-main">
+        <p id="selected-pokemon" class="visually-hidden" role="status"></p>
         <div id="bulbasaur" class="pokemon-info active">
             <h2>001# Bulbasaur</h2>
             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png" alt="Bulbasaur" style="max-width: 200px;">
@@ -1646,92 +1694,65 @@
             <p>Tipo: Psíquico</p>
             <p>Descrição: Mew é dito ser o Pokémon mais raro de todos. Ele é tão raro que muitos acreditam que ele seja apenas uma lenda.</p>
         </div>
-    </div>
+    </main>
 </div>
 <div class="credits">
     <h2>Créditos:</h2>
     <h2>Karlos Yury <a href="https://github.com/karlosyurydev" target="_blank"><img src="github.jpg" alt="GitHub" class="github-logo" style="width: 25px; height: 25px; object-fit: contain;"></a><a href="https://www.linkedin.com/in/karlosyurydev/" target="_blank"><img src="linkedin_logo.png" alt="LinkedIn" class="linkedin-logo"></a></h2>
-    <h2>Rafael Campello <a href="https://github.com/rafaelcampello" target="_blank"><img src="github.jpg" alt="LinkedIn" class="linkedin-logo" style="width: 25px; height: 25px; object-fit: contain;"> </a> <a href="https://www.linkedin.com/in/rafaelbcampelloeng/" target="_blank"><img src="linkedin_logo.png" alt="LinkedIn" class="linkedin-logo"></a></h2>
+    <h2>Rafael Campello <a href="https://github.com/rafaelcampello" target="_blank"><img src="github.jpg" alt="GitHub de Rafael Campello" class="github-logo" style="width: 25px; height: 25px; object-fit: contain;"> </a> <a href="https://www.linkedin.com/in/rafaelbcampelloeng/" target="_blank"><img src="linkedin_logo.png" alt="LinkedIn" class="linkedin-logo"></a></h2>
     <h2>Pokédex v2.5 - Março 2024</h2>
 </div>
 
-</div>
-
 <script>
-// Função para simular o clique no Bulbasaur ao carregar a página
-function loadDefaultPokemon() {
-    // Simula um clique no link do Bulbasaur
-    document.querySelector('.pokemon-list-item a[href="#bulbasaur"]').click();
-}
-
-// Executa a função loadDefaultPokemon() quando a página termina de carregar
-window.onload = loadDefaultPokemon;
-
-const pokemonInfo = document.querySelectorAll('.pokemon-info');
-let currentPokemonIndex = Array.from(pokemonInfo).findIndex(info => info.id === "bulbasaur");
+const pokemonInfo = Array.from(document.querySelectorAll('.pokemon-info'));
+const pokemonLinks = Array.from(document.querySelectorAll('.pokemon-list-item a'));
+const selectedStatus = document.getElementById('selected-pokemon');
+const searchForm = document.querySelector('.search-form');
+const searchStatus = document.getElementById('search-status');
+let currentPokemonIndex = pokemonInfo.findIndex(info => info.classList.contains('active'));
 
 function showPokemon(index) {
-    pokemonInfo.forEach(info => {
-        info.classList.remove('active');
-    });
-    pokemonInfo[index].classList.add('active');
+    pokemonInfo[currentPokemonIndex].classList.remove('active');
+    pokemonLinks[currentPokemonIndex].removeAttribute('aria-current');
+    currentPokemonIndex = index;
+    const selected = pokemonInfo[index];
+    selected.classList.add('active');
+    pokemonLinks[index].setAttribute('aria-current', 'true');
+    selectedStatus.textContent = 'Ficha selecionada: ' + selected.querySelector('h2').textContent;
 }
 
-function showPreviousPokemon() {
-    currentPokemonIndex = (currentPokemonIndex - 1 + pokemonInfo.length) % pokemonInfo.length;
-    showPokemon(currentPokemonIndex);
-}
-
-function showNextPokemon() {
-    currentPokemonIndex = (currentPokemonIndex + 1) % pokemonInfo.length;
-    showPokemon(currentPokemonIndex);
-}
-// Este trecho de código adiciona um ouvinte de eventos de clique a todos os links dentro dos itens da lista de Pokémon.
-document.querySelectorAll('.pokemon-list-item a').forEach(link => {
-    // Adiciona um evento de clique a cada link
-    link.addEventListener('click', function(e) {
-        // Impede o comportamento padrão do link de ocorrer (neste caso, seguir o link)
-        e.preventDefault();
-        // Obtém o ID do Pokémon alvo a partir do atributo href do link, removendo o '#' inicial
-        const targetId = this.getAttribute('href').substring(1);
-        // Obtém o elemento do Pokémon alvo com base no ID
-        const targetPokemon = document.getElementById(targetId);
-        // Se o Pokémon alvo existir
-        if (targetPokemon) {
-            // Remove a classe 'active' de todos os elementos de informação do Pokémon
-            pokemonInfo.forEach(info => {
-                info.classList.remove('active');
-            });
-            // Adiciona a classe 'active' ao elemento do Pokémon alvo para exibi-lo
-            targetPokemon.classList.add('active');
-            // Atualiza o índice do Pokémon atual para o índice do Pokémon alvo na lista
-            currentPokemonIndex = Array.from(pokemonInfo).indexOf(targetPokemon);
-        }
-    });
+document.getElementById('previous-pokemon').addEventListener('click', () => {
+    showPokemon((currentPokemonIndex - 1 + pokemonInfo.length) % pokemonInfo.length);
 });
 
-// Adiciona um ouvinte de eventos de pressionamento de tecla ao campo de pesquisa de Pokémon.
-document.getElementById('search').addEventListener('input', function() {
-    // Obtém o termo de pesquisa do campo de entrada, removendo espaços em branco iniciais e finais e convertendo para minúsculas
-    const searchTerm = this.value.trim().toLowerCase();
-
-    // Filtra os links dos Pokémon na lista com base nas primeiras letras do termo de pesquisa
-    document.querySelectorAll('.pokemon-list-item a').forEach(link => {
-        // Obtém o nome do Pokémon associado ao link, removendo o número e convertendo para minúsculas
-        const pokemonName = link.textContent.split('#')[1].trim().toLowerCase();
-        // Verifica se o nome do Pokémon começa com o termo de pesquisa
-        if (pokemonName.startsWith(searchTerm)) {
-            // Exibe o link do Pokémon
-            link.parentNode.style.display = 'block';
-        } else {
-            // Oculta o link do Pokémon se não corresponder ao termo de pesquisa
-            link.parentNode.style.display = 'none';
-        }
-    });
+document.getElementById('next-pokemon').addEventListener('click', () => {
+    showPokemon((currentPokemonIndex + 1) % pokemonInfo.length);
 });
 
+const searchEntries = pokemonLinks.map((link, index) => {
+    const [number, name] = link.textContent.split('#');
+    link.addEventListener('click', event => {
+        event.preventDefault();
+        showPokemon(index);
+    });
+    return { item: link.parentElement, number: Number(number), name: name.trim().toLowerCase() };
+});
 
+searchForm.addEventListener('submit', event => event.preventDefault());
 
+document.getElementById('search').addEventListener('input', event => {
+    const term = event.target.value.trim().toLowerCase();
+    const isNumber = /^\d+$/.test(term);
+    let matches = 0;
+
+    searchEntries.forEach(({ item, number, name }) => {
+        const visible = isNumber ? number === Number(term) : name.includes(term);
+        item.hidden = !visible;
+        if (visible) matches++;
+    });
+
+    searchStatus.textContent = term && matches === 0 ? 'Nenhum Pokémon encontrado.' : '';
+});
 </script>
 
 </body>
