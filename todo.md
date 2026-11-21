@@ -1,4 +1,4 @@
-# Melhorias da Pokédex 2.9
+# Melhorias da Pokédex 3.0
 
 Atualizado em 21/11/2026.
 
@@ -15,10 +15,12 @@ Atualizado em 21/11/2026.
 - [x] Adicionar as 1.347 versões Shiny com imagem na PokéAPI e as descrições específicas disponíveis.
 - [x] Sincronizar o seletor com o clique na imagem e permitir a navegação circular.
 
+- [x] Versionar a URL e a imagem Open Graph e incluir o catálogo completo e as opções Shiny na prévia.
+
 ## Verificações pendentes
 
 - [ ] Conferir o anúncio da ficha com um leitor de tela dedicado.
-- [ ] Após a publicação da versão 2.9, compartilhar a URL de produção no WhatsApp para conferir a nova prévia.
+- [ ] Após a publicação da versão 3.0, conferir os metadados e a imagem em produção e testar o link de compartilhamento `?v=3.0` no WhatsApp.
 
 ## Prioridade média
 

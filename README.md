@@ -1,6 +1,6 @@
-# Pokédex 2.9
+# Pokédex 3.0
 
-Atualizada em 21/11/2026. [Abrir a Pokédex](https://brave-wave-0a4b22810.5.azurestaticapps.net/)
+Atualizada em 21/11/2026. [Abrir a Pokédex](https://brave-wave-0a4b22810.5.azurestaticapps.net/) · [Link para compartilhar a versão 3.0](https://brave-wave-0a4b22810.5.azurestaticapps.net/?v=3.0)
 
 Pokédex interativa em português com as 1.025 espécies das nove gerações, de Bulbasaur (#001) a Pecharunt (#1025). Cada ficha exibe número, nome, imagem, tipo, altura, peso e uma breve descrição.
 
@@ -38,18 +38,18 @@ Há **1.347 versões Shiny** com imagem na coleção da PokéAPI. A ficha usa a 
 | `catalogo.js` | Dados locais das espécies e variedades |
 | `variedades.js` | Disponibilidade de imagens Shiny e descrições específicas por forma |
 | `favicon.png` | Favicon da Pokédex |
-| `preview-2.9.jpg` | Imagem Open Graph para compartilhamento |
+| `preview-3.0.jpg` | Imagem Open Graph para compartilhamento |
 | `karlos-favicon.svg` e `rafael-favicon.svg` | Favicons dos portfólios nos créditos |
 | `github.jpg` e `linkedin_logo.png` | Ícones da seção de créditos |
 | `.github/workflows/` | Workflow do GitHub Actions para publicação no Azure Static Web Apps |
 
 ## Publicação
 
-A raiz do repositório contém os arquivos do site estático. O workflow `brave-wave` publica no Azure Static Web Apps em pushes para `main` e gerencia as prévias dos pull requests. Os metadados Open Graph apontam para a URL de produção e para uma imagem JPEG de 1200 × 630 px.
+A raiz do repositório contém os arquivos do site estático. O workflow `brave-wave` publica no Azure Static Web Apps em pushes para `main` e gerencia as prévias dos pull requests. A prévia Open Graph usa uma URL de produção com o parâmetro de versão e uma imagem JPEG de 1200 × 630 px com nome versionado. Para compartilhar uma atualização, use o link da versão indicado no topo. Serviços de mensagem podem manter a prévia anterior no cache do link já compartilhado.
 
 ## Atualizações
 
-A cada atualização, revise o `README.md` e o `todo.md` no mesmo PR. Incremente a versão publicada em 0.1, salvo quando outra versão for indicada, e atualize a data para a do merge. Mantenha o título do site, o rodapé, os metadados e a imagem de compartilhamento coerentes com a versão.
+A cada atualização, revise o `README.md` e o `todo.md` no mesmo PR. Incremente a versão publicada em 0.1, salvo quando outra versão for indicada, e atualize a data para a do merge. No mesmo PR, atualize o título do site, o rodapé e a prévia Open Graph. Incremente a versão em `og:url`, gere uma nova imagem com o número da versão no nome e inclua as principais novidades no texto e na imagem. Depois do merge, confira o HTML e o JPEG na URL pública.
 
 ## Créditos
 
