@@ -4,7 +4,7 @@ Pokédex interativa em português com os 151 Pokémon da primeira geração, de 
 
 ## Como usar
 
-- Digite as primeiras letras do nome no campo de pesquisa para filtrar a lista lateral.
+- Digite parte do nome (como `pika` ou `chu`) ou o número do Pokémon (como `25` ou `025`) para filtrar a lista lateral.
 - Clique em um Pokémon da lista para abrir sua ficha. A página começa com Bulbasaur selecionado.
 - Use **Anterior** e **Próximo** para percorrer o catálogo completo, mesmo com a lista filtrada. A navegação retorna ao início depois de Mew.
 
