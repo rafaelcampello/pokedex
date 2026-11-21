@@ -1,4 +1,4 @@
-# Pokédex 2.8
+# Pokédex 2.9
 
 Atualizada em 21/11/2026. [Abrir a Pokédex](https://brave-wave-0a4b22810.5.azurestaticapps.net/)
 
@@ -8,7 +8,7 @@ Pokédex interativa em português com as 1.025 espécies das nove gerações, de
 
 - Digite parte do nome (como `pika` ou `chu`) ou o número do Pokémon (como `25` ou `025`) para filtrar a lista lateral.
 - Clique em um Pokémon da lista para abrir sua ficha. A página começa com Bulbasaur selecionado.
-- Quando houver mais de uma variedade, use o seletor na ficha para trocar a imagem, os tipos, a altura e o peso. A descrição é da espécie.
+- Use o seletor na ficha ou clique na imagem para alternar entre as versões normais e Shiny disponíveis. O clique segue a ordem do menu e volta à primeira versão depois da última. A ficha atualiza imagem, tipo, altura, peso e descrição conforme a variedade.
 - Use **Anterior** e **Próximo** para percorrer o catálogo completo, mesmo com a lista filtrada. A navegação retorna ao início depois de Pecharunt.
 
 ## Como rodar localmente
@@ -28,14 +28,17 @@ O catálogo reúne 1.025 espécies e todos os 1.351 registros do endpoint `/poke
 
 Os dados foram incorporados a partir dos [arquivos CSV da PokéAPI](https://github.com/PokeAPI/pokeapi/tree/cd5f6c6232f23430aa6089896d96230f5f7ecef4/data/v2/csv). As descrições #001 a #251 mantêm os textos em português das versões anteriores. Para as demais, a ficha usa a descrição em inglês disponibilizada pela PokéAPI. O site busca a arte oficial sob demanda e tenta o sprite da mesma variedade quando a arte está indisponível. [Coleção de imagens](https://github.com/PokeAPI/sprites)
 
+Há **1.347 versões Shiny** com imagem na coleção da PokéAPI. A ficha usa a descrição da forma quando a PokéAPI a fornece. Caso contrário, mantém a descrição da espécie. Normal e Shiny compartilham o texto da mesma forma. [Descrições por forma na PokéAPI](https://github.com/PokeAPI/pokeapi/blob/cd5f6c6232f23430aa6089896d96230f5f7ecef4/data/v2/csv/pokemon_form_flavor_text.csv)
+
 ## Estrutura do projeto
 
 | Arquivo ou pasta | Conteúdo |
 | --- | --- |
 | `index.html` | Interface, estilos e lógica de pesquisa e navegação |
 | `catalogo.js` | Dados locais das espécies e variedades |
+| `variedades.js` | Disponibilidade de imagens Shiny e descrições específicas por forma |
 | `favicon.png` | Favicon da Pokédex |
-| `preview-2.8.jpg` | Imagem Open Graph para compartilhamento |
+| `preview-2.9.jpg` | Imagem Open Graph para compartilhamento |
 | `karlos-favicon.svg` e `rafael-favicon.svg` | Favicons dos portfólios nos créditos |
 | `github.jpg` e `linkedin_logo.png` | Ícones da seção de créditos |
 | `.github/workflows/` | Workflow do GitHub Actions para publicação no Azure Static Web Apps |
