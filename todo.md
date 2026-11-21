@@ -1,4 +1,4 @@
-# Melhorias da Pokédex 2.7
+# Melhorias da Pokédex 2.8
 
 Atualizado em 21/11/2026.
 
@@ -10,15 +10,15 @@ Atualizado em 21/11/2026.
 - [x] Concentrar a publicação no workflow `brave-wave`.
 - [x] Adicionar favicon e imagem Open Graph. Atualizar o fundo, os créditos e os links dos portfólios.
 - [x] Incluir a segunda geração (#152 a #251), documentar as fontes e corrigir a vírgula nos créditos de Karlos Yury.
+- [x] Incluir as 1.025 espécies e as 326 variedades alternativas registradas no endpoint `/pokemon` da PokéAPI.
+- [x] Centralizar o catálogo em `catalogo.js` e carregar apenas a ilustração da ficha ou variedade selecionada.
 
 ## Verificações pendentes
 
 - [ ] Conferir o anúncio da ficha com um leitor de tela dedicado.
-- [ ] Após a publicação da versão 2.7, compartilhar a URL de produção no WhatsApp para conferir a nova prévia.
+- [ ] Após a publicação da versão 2.8, compartilhar a URL de produção no WhatsApp para conferir a nova prévia.
 
 ## Prioridade média
 
-- [ ] **Manter uma única fonte para o catálogo.** A lista e as fichas repetem nomes, números e identificadores no HTML. Gerar a lista e a ficha selecionada a partir dos mesmos dados, mantendo a abertura direta de `index.html` no navegador. Conferir os 251 registros, a seleção inicial de Bulbasaur e a navegação circular entre Celebi e Bulbasaur. [Catálogo](index.html)
-- [ ] **Carregar a ilustração da ficha selecionada sob demanda.** Hoje, as 251 imagens externas têm `src` no HTML inicial. Carregar cada imagem ao abrir a ficha e exibir uma alternativa quando o arquivo remoto falhar. Conferir as requisições na aba Rede do navegador e verificar que a ficha continua legível sem conexão. [Imagens do catálogo](index.html)
-- [ ] **Adicionar verificações de regressão.** Validar números de 1 a 251, ausência de IDs duplicados, seleção pela lista, pesquisa sem resultados e navegação circular. Automatizar as verificações do catálogo após centralizar os dados.
+- [ ] **Adicionar verificações de regressão.** Validar números de 1 a 1025, ausência de IDs duplicados, seleção pela lista, pesquisa sem resultados e navegação circular. Automatizar também a troca de variedades e a resposta a imagens indisponíveis.
 
