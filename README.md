@@ -1,4 +1,6 @@
-# Pokédex 2.5
+# Pokédex 2.6
+
+Atualizada em 21/11/2026. [Abrir a Pokédex](https://brave-wave-0a4b22810.5.azurestaticapps.net/)
 
 Pokédex interativa em português com os 151 Pokémon da primeira geração, de Bulbasaur a Mew. Cada ficha exibe número, nome, imagem, tipo, altura, peso e uma breve descrição.
 
@@ -24,14 +26,20 @@ Abra o arquivo `index.html` no navegador. O projeto usa HTML, CSS e JavaScript p
 | Arquivo ou pasta | Conteúdo |
 | --- | --- |
 | `index.html` | Interface, estilos, fichas do catálogo e lógica de pesquisa e navegação |
-| `pokeball.png` | Imagem de fundo |
+| `favicon.png` | Favicon da Pokédex |
+| `preview-2.6.jpg` | Imagem Open Graph para compartilhamento |
+| `karlos-favicon.svg` e `rafael-favicon.svg` | Favicons dos portfólios nos créditos |
 | `github.jpg` e `linkedin_logo.png` | Ícones da seção de créditos |
-| `.github/workflows/` | Fluxos do GitHub Actions para publicação no Azure Static Web Apps |
+| `.github/workflows/` | Workflow do GitHub Actions para publicação no Azure Static Web Apps |
 
 ## Publicação
 
-A raiz do repositório contém os arquivos do site estático. Os fluxos de publicação do Azure Static Web Apps estão configurados para pushes e pull requests na branch `main` e usam tokens de implantação armazenados nos secrets do GitHub Actions.
+A raiz do repositório contém os arquivos do site estático. O workflow `brave-wave` publica no Azure Static Web Apps em pushes para `main` e gerencia as prévias dos pull requests. Os metadados Open Graph apontam para a URL de produção e para uma imagem JPEG de 1200 × 630 px.
+
+## Atualizações
+
+A cada atualização, revise o `README.md` e o `todo.md` no mesmo PR. Incremente a versão publicada em 0.1, salvo quando outra versão for indicada, e atualize a data para a do merge. Mantenha o título do site, o rodapé, os metadados e a imagem de compartilhamento coerentes com a versão.
 
 ## Créditos
 
-Desenvolvido por Karlos Yury e Rafael Campello. [Karlos Yury](https://github.com/karlosyurydev) · [Rafael Campello](https://github.com/rafaelcampello)
+Desenvolvido por Karlos Yury (PxG Server Gold Char: Malefic Luna level 430+, clã Malefic) e Rafael Campello (PxG Server Gold, Char: Voextor level 490+, clã Raibolt). [Portfólio de Karlos Yury](https://www.karlosyury.com/) · [Portfólio de Rafael Campello](https://www.rafaelbcampello.com/)
