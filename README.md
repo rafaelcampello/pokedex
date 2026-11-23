@@ -1,8 +1,14 @@
-# Pokédex 3.1
+# Pokédex 3.2
 
-Atualizada em 21/11/2026. [Abrir a Pokédex](https://brave-wave-0a4b22810.5.azurestaticapps.net/) · [Link para compartilhar a versão 3.1](https://brave-wave-0a4b22810.5.azurestaticapps.net/?v=3.1)
+Atualizada em 23/11/2026. [Abrir a Pokédex](https://brave-wave-0a4b22810.5.azurestaticapps.net/) · [Link para compartilhar a versão 3.2](https://brave-wave-0a4b22810.5.azurestaticapps.net/?v=3.2)
 
 Pokédex interativa em português brasileiro, inglês, espanhol e polonês com as 1.025 espécies das nove gerações, de Bulbasaur (#001) a Pecharunt (#1025). Cada ficha exibe número, nome, imagem, tipo, altura, peso e uma breve descrição.
+
+## Sobre o projeto
+
+Esta Pokédex é um projeto de prática de JavaScript, HTML e uso de APIs. Ela não tem relação com a Pokédex interna do jogo PokeXGames e não é afiliada ao jogo.
+
+Agradecemos aos criadores e mantenedores da PokéAPI pela base de dados e pelo acervo de imagens. Os dados do catálogo são incorporados ao projeto a partir dos arquivos da PokéAPI. O navegador carrega as imagens do repositório de sprites sob demanda. [PokéAPI no GitHub](https://github.com/PokeAPI/)
 
 ## Como usar
 
@@ -43,7 +49,7 @@ Há **1.347 versões Shiny** com imagem na coleção da PokéAPI. A ficha usa a 
 | `descricoes-*.js` | Descrições locais carregadas conforme o idioma |
 | `vendor/` | i18next e licença MIT |
 | `favicon.png` | Favicon da Pokédex |
-| `preview-3.1.jpg` | Imagem Open Graph para compartilhamento |
+| `preview-3.2.jpg` | Imagem Open Graph para compartilhamento |
 | `karlos-favicon.svg` e `rafael-favicon.svg` | Favicons dos portfólios nos créditos |
 | `github.jpg` e `linkedin_logo.png` | Ícones da seção de créditos |
 | `.github/workflows/` | Workflow do GitHub Actions para publicação no Azure Static Web Apps |

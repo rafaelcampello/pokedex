@@ -6,20 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pokédex 3.1</title>
+<title>Pokédex 3.2</title>
 <link rel="icon" type="image/png" sizes="64x64" href="favicon.png">
-<meta name="description" content="Explore 1.025 espécies e 1.347 versões Shiny em português, inglês, espanhol e polonês.">
+<meta name="description" content="Explore 1.025 espécies e 1.347 versões Shiny em quatro idiomas neste projeto educativo independente, com dados da PokéAPI.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:title" content="Pokédex 3.1">
-<meta property="og:description" content="Explore 1.025 espécies e 1.347 versões Shiny em português, inglês, espanhol e polonês.">
+<meta property="og:title" content="Pokédex 3.2">
+<meta property="og:description" content="Explore 1.025 espécies e 1.347 versões Shiny em quatro idiomas neste projeto educativo independente, com dados da PokéAPI.">
 <link rel="canonical" href="https://brave-wave-0a4b22810.5.azurestaticapps.net/">
-<meta property="og:url" content="https://brave-wave-0a4b22810.5.azurestaticapps.net/?v=3.1">
-<meta property="og:image" content="https://brave-wave-0a4b22810.5.azurestaticapps.net/preview-3.1.jpg">
+<meta property="og:url" content="https://brave-wave-0a4b22810.5.azurestaticapps.net/?v=3.2">
+<meta property="og:image" content="https://brave-wave-0a4b22810.5.azurestaticapps.net/preview-3.2.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Pokédex 3.1, 1.025 espécies em quatro idiomas, com uma ilustração de uma Pokédex vermelha.">
+<meta property="og:image:alt" content="Pokédex 3.2, projeto educativo independente com dados da PokéAPI.">
 <style>
     body {
         font-family: Arial, sans-serif;
@@ -292,6 +292,11 @@
         width: 30px;
         height: 20px;
     }
+    .about-project {
+        max-width: 600px;
+        margin: 24px auto;
+        line-height: 1.5;
+    }
 </style>
 </head>
 <body>
@@ -304,7 +309,7 @@
             <button type="button" data-locale="pl" lang="pl" aria-label="Polski" title="Polski" aria-pressed="false"><svg viewBox="0 0 30 20" aria-hidden="true" focusable="false"><path fill="#fff" d="M0 0h30v10H0z"/><path fill="#dc143c" d="M0 10h30v10H0z"/></svg></button>
         </div>
         <p id="language-status" class="visually-hidden" role="status"></p>
-        <h1>Pokédex 3.1</h1>
+        <h1>Pokédex 3.2</h1>
 		<h2 data-i18n="list">Lista de Pokémon</h2>
         <form class="search-form">
             <label for="search" data-i18n="search">Pesquisar Pokémon</label>
@@ -363,7 +368,13 @@
         </a>
         <small>Pokédex independente desenvolvida pela comunidade, sem vínculo oficial com o PokeXGames.</small>
     </div>
-    <p>Pokédex v3.1 — <time datetime="2026-11-21">21/11/2026</time></p>
+    <p>Pokédex v3.2 — <time datetime="2026-11-23">23/11/2026</time></p>
+    <section class="about-project" aria-labelledby="about-project-title">
+        <h2 id="about-project-title" data-i18n="aboutTitle">Projeto independente e educativo</h2>
+        <p data-i18n="aboutProject">Esta Pokédex é um projeto de prática de JavaScript, HTML e uso de APIs. Ela não tem relação com a Pokédex interna do jogo PokeXGames e não é afiliada ao jogo.</p>
+        <p data-i18n="aboutSource">Agradecemos aos criadores e mantenedores da PokéAPI pela base de dados e pelo acervo de imagens. Os dados do catálogo são incorporados ao projeto a partir dos arquivos da PokéAPI. O navegador carrega as imagens do repositório de sprites sob demanda.</p>
+        <p><a href="https://github.com/PokeAPI/" data-i18n="aboutLink">PokéAPI no GitHub</a></p>
+    </section>
 </footer>
 
 <script src="vendor/i18next.min.js"></script>

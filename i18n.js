@@ -4,6 +4,10 @@ const descriptionLoads = new Map();
 
 const messages = {
     'pt-BR': {
+        aboutTitle: "Projeto independente e educativo",
+        aboutProject: "Esta Pokédex é um projeto de prática de JavaScript, HTML e uso de APIs. Ela não tem relação com a Pokédex interna do jogo PokeXGames e não é afiliada ao jogo.",
+        aboutSource: "Agradecemos aos criadores e mantenedores da PokéAPI pela base de dados e pelo acervo de imagens. Os dados do catálogo são incorporados ao projeto a partir dos arquivos da PokéAPI. O navegador carrega as imagens do repositório de sprites sob demanda.",
+        aboutLink: "PokéAPI no GitHub",
         language: 'Idioma', list: 'Lista de Pokémon', search: 'Pesquisar Pokémon',
         placeholder: 'Nome ou número', previous: 'Anterior', next: 'Próximo',
         empty: 'Nenhum Pokémon encontrado.', variety: 'Variedade', defaultForm: 'Forma padrão',
@@ -17,6 +21,10 @@ const messages = {
         types: ['Normal', 'Lutador', 'Voador', 'Veneno', 'Terra', 'Pedra', 'Inseto', 'Fantasma', 'Aço', 'Fogo', 'Água', 'Grama', 'Elétrico', 'Psíquico', 'Gelo', 'Dragão', 'Sombrio', 'Fada']
     },
     en: {
+        aboutTitle: "Independent educational project",
+        aboutProject: "This Pokédex was built to practice JavaScript, HTML and working with APIs. It is unrelated to the in-game Pokédex in PokeXGames and is not affiliated with the game.",
+        aboutSource: "Thanks to the PokéAPI creators and maintainers for the data and image collection. The catalog uses local data sourced from PokéAPI files. The browser loads images from the sprite repository on demand.",
+        aboutLink: "PokéAPI on GitHub",
         language: 'Language', list: 'Pokémon list', search: 'Search Pokémon',
         placeholder: 'Name or number', previous: 'Previous', next: 'Next',
         empty: 'No Pokémon found.', variety: 'Variety', defaultForm: 'Default form',
@@ -29,6 +37,10 @@ const messages = {
         types: ['Normal', 'Fighting', 'Flying', 'Poison', 'Ground', 'Rock', 'Bug', 'Ghost', 'Steel', 'Fire', 'Water', 'Grass', 'Electric', 'Psychic', 'Ice', 'Dragon', 'Dark', 'Fairy']
     },
     es: {
+        aboutTitle: "Proyecto independiente y educativo",
+        aboutProject: "Esta Pokédex es un proyecto para practicar JavaScript, HTML y el uso de APIs. No tiene relación con la Pokédex interna de PokeXGames ni está afiliada al juego.",
+        aboutSource: "Gracias a los creadores y mantenedores de PokéAPI por los datos y las imágenes. El catálogo usa datos locales obtenidos de los archivos de PokéAPI. El navegador carga las imágenes del repositorio de sprites cuando se necesitan.",
+        aboutLink: "PokéAPI en GitHub",
         language: 'Idioma', list: 'Lista de Pokémon', search: 'Buscar Pokémon',
         placeholder: 'Nombre o número', previous: 'Anterior', next: 'Siguiente',
         empty: 'No se encontraron Pokémon.', variety: 'Variante', defaultForm: 'Forma predeterminada',
@@ -41,6 +53,10 @@ const messages = {
         types: ['Normal', 'Lucha', 'Volador', 'Veneno', 'Tierra', 'Roca', 'Bicho', 'Fantasma', 'Acero', 'Fuego', 'Agua', 'Planta', 'Eléctrico', 'Psíquico', 'Hielo', 'Dragón', 'Siniestro', 'Hada']
     },
     pl: {
+        aboutTitle: "Niezależny projekt edukacyjny",
+        aboutProject: "Ten Pokédex powstał w ramach ćwiczeń z JavaScriptu, HTML-u i obsługi API. Nie ma związku z Pokédexem dostępnym w grze PokeXGames ani z samą grą.",
+        aboutSource: "Dziękujemy twórcom i opiekunom PokéAPI za dane i zbiór obrazów. Katalog korzysta z lokalnych danych z plików PokéAPI. Przeglądarka pobiera obrazy z repozytorium sprite’ów w razie potrzeby.",
+        aboutLink: "PokéAPI na GitHubie",
         language: 'Język', list: 'Lista Pokémonów', search: 'Szukaj Pokémonów',
         placeholder: 'Nazwa lub numer', previous: 'Poprzedni', next: 'Następny',
         empty: 'Nie znaleziono Pokémonów.', variety: 'Odmiana', defaultForm: 'Forma podstawowa',
