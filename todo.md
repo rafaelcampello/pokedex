@@ -1,6 +1,6 @@
-# Melhorias da Pokédex 3.1
+# Melhorias da Pokédex 3.2
 
-Atualizado em 21/11/2026.
+Atualizado em 23/11/2026.
 
 ## Entregue
 
@@ -20,10 +20,12 @@ Atualizado em 21/11/2026.
 - [x] Internacionalizar a interface com i18next e quatro bandeiras acima do título.
 - [x] Disponibilizar 1.025 descrições de espécies e 63 descrições de formas em cada idioma.
 
+- [x] Explicar o caráter independente e educativo da Pokédex nos quatro idiomas e creditar a PokéAPI.
+
 ## Verificações pendentes
 
 - [ ] Conferir o anúncio da ficha com um leitor de tela dedicado.
-- [ ] Após a publicação da versão 3.1, conferir os metadados e a imagem em produção e testar o link de compartilhamento `?v=3.1` no WhatsApp.
+- [ ] Após a publicação da versão 3.2, conferir os metadados e a imagem em produção e testar o link de compartilhamento `?v=3.2` no WhatsApp.
 
 ## Prioridade média
 
